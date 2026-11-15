@@ -1,11 +1,193 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Rasha Fashion Store</title>
+  <title>Aura & Co. | Egypt Store</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 </head>
-<body>
-  <h1>Welcome to Rasha Fashion Store</h1>
+<body class="bg-zinc-950 text-zinc-100 antialiased" x-data="storeApp()">
+
+  <!-- Top Announcement Bar -->
+  <div class="bg-zinc-900 border-b border-zinc-800 text-xs py-2 text-center tracking-widest uppercase text-zinc-400">
+    Fast Delivery Across Egypt • InstaPay & Vodafone Cash Accepted
+  </div>
+
+  <!-- Navigation -->
+  <header class="sticky top-0 z-50 bg-zinc-950/80 backdrop-blur-md border-b border-zinc-800">
+    <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+      <a href="#" class="text-xl font-black tracking-tighter uppercase">Aura & Co.</a>
+      <button @click="cartOpen = !cartOpen" class="flex items-center space-x-2 bg-zinc-900 border border-zinc-800 px-4 py-2 rounded-full text-sm font-medium hover:bg-zinc-800 transition">
+        <span>Cart</span>
+        <span class="bg-white text-zinc-950 px-2 py-0.5 rounded-full text-xs font-bold" x-text="cartItemCount">0</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Main Store Architecture -->
+  <main class="max-w-7xl mx-auto px-6 py-12 grid grid-cols-1 lg:grid-cols-12 gap-12">
+    
+    <!-- Product Grid (8 Cols) -->
+    <div class="lg:col-span-8 space-y-6">
+      <h2 class="text-xl font-bold tracking-tight border-b border-zinc-900 pb-4">Outerwear & Hoodies Collection</h2>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+        <template x-for="product in products" :key="product.id">
+          <div class="group bg-zinc-900/40 border border-zinc-800 rounded-2xl p-4 flex flex-col justify-between">
+            <div class="relative overflow-hidden rounded-xl aspect-[4/5] bg-zinc-900">
+              <img :src="product.image" :alt="product.name" class="object-cover w-full h-full group-hover:scale-105 transition duration-500">
+            </div>
+            <div class="mt-4 space-y-2">
+              <h3 class="text-sm font-semibold text-zinc-200" x-text="product.name"></h3>
+              <div class="flex items-center justify-between">
+                <span class="text-sm font-bold" x-text="`${product.priceEGP} EGP`"></span>
+                <button @click="addToCart(product)" class="bg-zinc-100 text-zinc-950 text-xs font-semibold px-4 py-2 rounded-lg hover:bg-white transition">
+                  Add to Cart
+                </button>
+              </div>
+            </div>
+          </div>
+        </template>
+      </div>
+    </div>
+
+    <!-- Sticky Checkout Panel (4 Cols) -->
+    <div class="lg:col-span-4">
+      <div class="sticky top-28 bg-zinc-950 border border-zinc-800 rounded-3xl p-6 space-y-6 shadow-xl">
+        <div class="flex items-center justify-between border-b border-zinc-800 pb-4">
+          <h2 class="font-bold text-base">Your Cart</h2>
+          <span class="text-xs text-zinc-400" x-text="cartItemCount + ' items'"></span>
+        </div>
+
+        <!-- Cart List -->
+        <div class="space-y-3 max-h-48 overflow-y-auto pr-1">
+          <template x-for="item in cart" :key="item.id">
+            <div class="flex items-center justify-between bg-zinc-900 p-3 rounded-xl border border-zinc-800 text-xs">
+              <div>
+                <p class="font-semibold text-zinc-200" x-text="item.name"></p>
+                <p class="text-zinc-500" x-text="`Qty: ${item.qty} × ${item.priceEGP} EGP`"></p>
+              </div>
+              <button @click="removeFromCart(item.id)" class="text-red-400 hover:text-red-300">Remove</button>
+            </div>
+          </template>
+          <div x-show="cart.length === 0" class="text-center py-6 text-zinc-500 text-xs">
+            Your cart is empty.
+          </div>
+        </div>
+
+        <!-- Total -->
+        <div class="border-t border-zinc-800 pt-4 flex justify-between text-base font-bold">
+          <span>Total:</span>
+          <span class="font-mono text-white" x-text="totalEGP + ' EGP'"></span>
+        </div>
+
+        <!-- Checkout Form -->
+        <form @submit.prevent="processCheckout" class="space-y-4">
+          <div>
+            <label class="text-[10px] font-bold uppercase tracking-wider text-zinc-400 block mb-1">Full Name</label>
+            <input type="text" x-model="form.name" required class="w-full bg-zinc-900 border border-zinc-800 rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-zinc-500">
+          </div>
+          <div>
+            <label class="text-[10px] font-bold uppercase tracking-wider text-zinc-400 block mb-1">Email</label>
+            <input type="email" x-model="form.email" required class="w-full bg-zinc-900 border border-zinc-800 rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-zinc-500">
+          </div>
+          <div>
+            <label class="text-[10px] font-bold uppercase tracking-wider text-zinc-400 block mb-1">Phone Number</label>
+            <input type="text" x-model="form.phone" required placeholder="010xxxxxxxx" class="w-full bg-zinc-900 border border-zinc-800 rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-zinc-500">
+          </div>
+          <div>
+            <label class="text-[10px] font-bold uppercase tracking-wider text-zinc-400 block mb-1">Delivery Address (City, Street)</label>
+            <input type="text" x-model="form.address" required class="w-full bg-zinc-900 border border-zinc-800 rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-zinc-500">
+          </div>
+
+          <!-- Egyptian Payment Methods -->
+          <div class="space-y-2 pt-2">
+            <label class="text-[10px] font-bold uppercase tracking-wider text-zinc-400 block">Payment Method</label>
+            <div class="grid grid-cols-1 gap-2 text-xs">
+              <label class="flex items-center space-x-3 p-3 rounded-xl border border-zinc-800 bg-zinc-900 cursor-pointer">
+                <input type="radio" value="cod" x-model="form.paymentMethod" class="accent-white">
+                <div>
+                  <p class="font-semibold">Cash on Delivery (COD)</p>
+                  <p class="text-[10px] text-zinc-500">Pay cash upon receiving your order</p>
+                </div>
+              </label>
+
+              <label class="flex items-center space-x-3 p-3 rounded-xl border border-zinc-800 bg-zinc-900 cursor-pointer">
+                <input type="radio" value="instapay" x-model="form.paymentMethod" class="accent-white">
+                <div>
+                  <p class="font-semibold">InstaPay</p>
+                  <p class="text-[10px] text-zinc-500">Instant transfer via IPN handle</p>
+                </div>
+              </label>
+
+              <label class="flex items-center space-x-3 p-3 rounded-xl border border-zinc-800 bg-zinc-900 cursor-pointer">
+                <input type="radio" value="vodafone_cash" x-model="form.paymentMethod" class="accent-white">
+                <div>
+                  <p class="font-semibold">Vodafone Cash</p>
+                  <p class="text-[10px] text-zinc-500">Transfer to merchant mobile wallet</p>
+                </div>
+              </label>
+
+              <label class="flex items-center space-x-3 p-3 rounded-xl border border-zinc-800 bg-zinc-900 cursor-pointer">
+                <input type="radio" value="egypt_card" x-model="form.paymentMethod" class="accent-white">
+                <div>
+                  <p class="font-semibold">Egyptian Bank Card (Visa / Mastercard)</p>
+                  <p class="text-[10px] text-zinc-500">Pay securely online with local debit/credit</p>
+                </div>
+              </label>
+            </div>
+          </div>
+
+          <button type="submit" class="w-full bg-white text-zinc-950 font-bold py-3 rounded-xl text-xs uppercase tracking-wider hover:bg-zinc-200 transition">
+            Place Order
+          </button>
+        </form>
+      </div>
+    </div>
+  </main>
+
+  <!-- Script Logic -->
+  <script>
+    function storeApp() {
+      return {
+        cart: JSON.parse(localStorage.getItem('egypt_store_cart')) || [],
+        form: { name: '', email: '', phone: '', address: '', paymentMethod: 'cod' },
+        products: [
+          { id: 'item_1', name: 'Brown Zebra Overshirt', priceEGP: 650, image: 'image_2.jpg' },
+          { id: 'item_2', name: 'Aztec Patterned Wool Shacket', priceEGP: 700, image: 'image (1).jpg' },
+          { id: 'item_3', name: 'Vintage Forest Fleece Jacket', priceEGP: 720, image: 'image (2).jpg' },
+          { id: 'item_4', name: 'Classic Brown Zebra Jacket', priceEGP: 650, image: 'image (3).png' },
+          { id: 'item_5', name: 'Rustic Geometric Fleece Shacket', priceEGP: 700, image: 'image (4).jpg' },
+          { id: 'item_6', name: 'Black Plaid Cropped Flannel', priceEGP: 580, image: 'image (5).jpg' },
+          { id: 'item_7', name: 'Black Script Oversized Hoodie', priceEGP: 850, image: 'image (6).jpg' },
+          { id: 'item_8', name: 'Cream Checkered Pocket Shacket', priceEGP: 600, image: 'image (7).jpg' },
+          { id: 'item_9', name: 'Ivory Script Oversized Hoodie', priceEGP: 850, priceUSD: 18, image: 'image (8).jpg' },
+          { id: 'item_10', name: 'Sage Green Script Hoodie', priceEGP: 850, image: 'image (9).jpg' }
+        ],
+        get cartItemCount() { return this.cart.reduce((s, i) => s + i.qty, 0); },
+        get totalEGP() { return this.cart.reduce((s, i) => s + (i.priceEGP * i.qty), 0); },
+        addToCart(p) {
+          let match = this.cart.find(i => i.id === p.id);
+          match ? match.qty++ : this.cart.push({ ...p, qty: 1 });
+          localStorage.setItem('egypt_store_cart', JSON.stringify(this.cart));
+        },
+        removeFromCart(id) {
+          this.cart = this.cart.filter(i => i.id !== id);
+          localStorage.setItem('egypt_store_cart', JSON.stringify(this.cart));
+        },
+        processCheckout() {
+          if (this.cart.length === 0) {
+            alert('Your cart is empty.');
+            return;
+          }
+          alert(`Order placed successfully using ${this.form.paymentMethod.toUpperCase()}! We will contact you at ${this.form.phone} to confirm delivery.`);
+          this.cart = [];
+          localStorage.removeItem('egypt_store_cart');
+          this.form = { name: '', email: '', phone: '', address: '', paymentMethod: 'cod' };
+        }
+      }
+    }
+  </script>
 </body>
 </html>
