@@ -1,193 +1,806 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Rasha Fashion Store</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RASHA (RE) | Winter Clothing Store — Egypt</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    [hidden] { display: none !important; }
+    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #fafaf9; color: #1c1917; line-height: 1.5; overflow-x: hidden; }
+    button, select, input { font-family: inherit; }
+    button { cursor: pointer; }
+
+    /* Animated ambient background */
+    .ambient-background {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      overflow: hidden;
+      pointer-events: none;
+      background:
+        radial-gradient(circle at 15% 20%, rgba(251, 191, 36, 0.14), transparent 24rem),
+        radial-gradient(circle at 85% 30%, rgba(120, 53, 15, 0.12), transparent 28rem),
+        linear-gradient(135deg, #fdfcfb 0%, #f7f3ed 50%, #fafaf9 100%);
+    }
+    .ambient-background::before,
+    .ambient-background::after {
+      content: "";
+      position: absolute;
+      width: 28rem;
+      aspect-ratio: 1;
+      border-radius: 50%;
+      filter: blur(10px);
+      opacity: 0.55;
+      will-change: transform;
+    }
+    .ambient-background::before {
+      left: -12rem;
+      top: 18%;
+      background: radial-gradient(circle, rgba(217, 119, 6, 0.22), rgba(217, 119, 6, 0));
+      animation: float-orb-one 18s ease-in-out infinite alternate;
+    }
+    .ambient-background::after {
+      right: -14rem;
+      bottom: 4%;
+      background: radial-gradient(circle, rgba(69, 26, 3, 0.16), rgba(69, 26, 3, 0));
+      animation: float-orb-two 22s ease-in-out infinite alternate;
+    }
+    @keyframes float-orb-one {
+      0% { transform: translate3d(0, 0, 0) scale(1); }
+      100% { transform: translate3d(18rem, 12rem, 0) scale(1.18); }
+    }
+    @keyframes float-orb-two {
+      0% { transform: translate3d(0, 0, 0) scale(1); }
+      100% { transform: translate3d(-16rem, -10rem, 0) scale(1.12); }
+    }
+
+    /* Top Bar & Header */
+    .top-bar { background: #0c0a09; color: #e7e5e4; text-align: center; font-size: 12px; padding: 8px 16px; letter-spacing: 0.5px; }
+    .top-bar span { color: #fbbf24; font-weight: bold; }
+    header { position: sticky; top: 0; z-index: 100; background: #ffffff; border-bottom: 1px solid #e7e5e4; padding: 14px 24px; }
+    .nav-container { max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; }
+    .brand { display: flex; flex: 0 0 auto; align-items: center; text-decoration: none; }
+    .brand img { display: block; width: 120px; height: 76px; object-fit: contain; }
+    .nav-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+    .search-box { padding: 8px 14px; border: 1px solid #d6d3d1; border-radius: 20px; font-size: 14px; width: 200px; }
+
+    /* Buttons */
+    .btn { padding: 9px 16px; border-radius: 8px; border: none; font-size: 14px; font-weight: 600; transition: 0.2s; }
+    .btn-dark { background: #1c1917; color: #ffffff; }
+    .btn-dark:hover { background: #78350f; }
+    .btn-amber { background: #92400e; color: #ffffff; }
+    .btn-amber:hover { background: #78350f; }
+    .btn-outline { background: #ffffff; color: #1c1917; border: 1px solid #d6d3d1; }
+    .btn-outline:hover { background: #f5f5f4; }
+    .badge { background: #d97706; color: #fff; padding: 2px 7px; border-radius: 12px; font-size: 12px; margin-left: 4px; }
+
+    /* Hero */
+    .hero {
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(115deg, #1c1917 0%, #451a03 50%, #78350f 100%);
+      background-size: 220% 220%;
+      color: #ffffff;
+      padding: 64px 24px;
+      text-align: center;
+      animation: hero-gradient 12s ease-in-out infinite;
+    }
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: -50%;
+      background: linear-gradient(115deg, transparent 42%, rgba(255, 247, 237, 0.08) 50%, transparent 58%);
+      transform: translateX(-35%);
+      animation: hero-shine 8s ease-in-out infinite;
+    }
+    .hero-inner { position: relative; z-index: 1; }
+    @keyframes hero-gradient {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+    @keyframes hero-shine {
+      0%, 20% { transform: translateX(-35%) rotate(8deg); }
+      60%, 100% { transform: translateX(35%) rotate(8deg); }
+    }
+    .hero-inner { max-width: 750px; margin: 0 auto; }
+    .hero-tag { display: inline-block; background: #92400e; color: #fef3c7; font-size: 11px; font-weight: bold; text-transform: uppercase; letter-spacing: 1.5px; padding: 5px 12px; border-radius: 20px; margin-bottom: 16px; }
+    .hero h1 { font-family: Georgia, serif; font-size: 40px; margin-bottom: 14px; line-height: 1.2; }
+    .hero p { color: #d6d3d1; font-size: 16px; margin-bottom: 24px; }
+
+    /* Catalog Controls */
+    .container { max-width: 1200px; margin: 0 auto; padding: 40px 24px; }
+    .toolbar { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 16px; margin-bottom: 28px; }
+    .filters { display: flex; flex-wrap: wrap; gap: 8px; }
+    .filter-btn { padding: 8px 18px; border-radius: 20px; border: 1px solid #d6d3d1; background: #ffffff; font-size: 14px; font-weight: 500; }
+    .filter-btn.active { background: #1c1917; color: #ffffff; border-color: #1c1917; }
+    .sort-select { padding: 8px 14px; border-radius: 20px; border: 1px solid #d6d3d1; background: #ffffff; font-size: 14px; }
+
+    /* Product Grid */
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); gap: 24px; }
+    .card { background: #ffffff; border: 1px solid #e7e5e4; border-radius: 12px; overflow: hidden; display: flex; flex-direction: column; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
+    .card-img-wrap { position: relative; height: 320px; background: #e7e5e4; }
+    .card-img-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .cat-tag { position: absolute; top: 12px; left: 12px; background: rgba(255,255,255,0.92); padding: 4px 10px; border-radius: 6px; font-size: 11px; font-weight: bold; text-transform: uppercase; }
+    .wish-btn { position: absolute; top: 12px; right: 12px; width: 34px; height: 34px; border-radius: 50%; border: none; background: #ffffff; font-size: 16px; box-shadow: 0 2px 5px rgba(0,0,0,0.15); }
+    .card-body { padding: 18px; flex: 1; display: flex; flex-direction: column; justify-content: space-between; }
+    .card-title { font-size: 18px; font-weight: bold; margin-bottom: 4px; }
+    .card-desc { font-size: 13px; color: #57534e; margin-bottom: 10px; }
+    .card-price { font-size: 17px; font-weight: bold; color: #78350f; margin-bottom: 14px; }
+    .card-actions { display: flex; gap: 8px; padding-top: 12px; border-top: 1px solid #f5f5f4; }
+    .color-select { flex: 1; min-width: 0; padding: 8px; border: 1px solid #d6d3d1; border-radius: 8px; background: #fafaf9; }
+
+    /* Drawers & Modals */
+    .overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.55); z-index: 200; display: none; justify-content: flex-end; }
+    .overlay.open { display: flex; }
+    .overlay.center { justify-content: center; align-items: center; padding: 16px; }
+    .drawer { background: #ffffff; width: 100%; max-width: 420px; height: 100%; display: flex; flex-direction: column; }
+    .modal-box { background: #ffffff; width: 100%; max-width: 440px; border-radius: 14px; padding: 24px; }
+    .drawer-header { padding: 18px 20px; border-bottom: 1px solid #e7e5e4; display: flex; justify-content: space-between; align-items: center; }
+    .drawer-body { flex: 1; overflow-y: auto; padding: 20px; }
+    .drawer-footer { max-height: 55vh; overflow-y: auto; flex-shrink: 0; padding: 18px 20px; border-top: 1px solid #e7e5e4; background: #fafaf9; }
+
+    /* Form & Cart Items */
+    .cart-item { display: flex; justify-content: space-between; align-items: center; background: #fafaf9; border: 1px solid #e7e5e4; padding: 10px; border-radius: 8px; margin-bottom: 10px; }
+    .qty-controls { display: flex; align-items: center; gap: 8px; }
+    .qty-btn { width: 26px; height: 26px; border: 1px solid #d6d3d1; background: #ffffff; border-radius: 4px; font-weight: bold; }
+    .form-input { width: 100%; padding: 9px 12px; border: 1px solid #d6d3d1; border-radius: 8px; font-size: 14px; margin-bottom: 10px; }
+    .summary-row { display: flex; justify-content: space-between; font-size: 14px; margin-bottom: 6px; }
+    .summary-total { display: flex; justify-content: space-between; font-size: 17px; font-weight: bold; padding-top: 8px; border-top: 1px solid #d6d3d1; margin-bottom: 14px; }
+    .payment-notice { background: #fffbeb; border: 1px solid #fde68a; border-radius: 8px; color: #78350f; font-size: 13px; margin-bottom: 10px; padding: 10px 12px; }
+
+    footer { background: #0c0a09; color: #a8a29e; text-align: center; padding: 32px 16px; font-size: 13px; margin-top: 40px; }
+    html[dir="rtl"] .overlay:not(.center) { justify-content: flex-start; }
+    html[dir="rtl"] .cat-tag { left: auto; right: 12px; }
+    html[dir="rtl"] .wish-btn { right: auto; left: 12px; }
+    html[dir="rtl"] .badge { margin-left: 0; margin-right: 4px; }
+    @media (prefers-reduced-motion: reduce) {
+      .ambient-background::before,
+      .ambient-background::after,
+      .hero,
+      .hero::before {
+        animation: none;
+      }
+    }
+  </style>
 </head>
-<body class="bg-zinc-950 text-zinc-100 antialiased" x-data="storeApp()">
+<body>
+  <div class="ambient-background" aria-hidden="true"></div>
 
-  <!-- Top Announcement Bar -->
-  <div class="bg-zinc-900 border-b border-zinc-800 text-xs py-2 text-center tracking-widest uppercase text-zinc-400">
-    Fast Delivery Across Egypt • InstaPay & Vodafone Cash Accepted
-  </div>
-
-  <!-- Navigation -->
-  <header class="sticky top-0 z-50 bg-zinc-950/80 backdrop-blur-md border-b border-zinc-800">
-    <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-      <a href="#" class="text-xl font-black tracking-tighter uppercase">Aura & Co.</a>
-      <button @click="cartOpen = !cartOpen" class="flex items-center space-x-2 bg-zinc-900 border border-zinc-800 px-4 py-2 rounded-full text-sm font-medium hover:bg-zinc-800 transition">
-        <span>Cart</span>
-        <span class="bg-white text-zinc-950 px-2 py-0.5 rounded-full text-xs font-bold" x-text="cartItemCount">0</span>
-      </button>
+  <header>
+    <div class="nav-container">
+      <a href="#" class="brand" aria-label="RASHA home">
+        <img src="https://i.postimg.cc/h4Q92Vbh/Whats-App-Image-2026-11-19-at-3-37-11-PM.jpg" alt="RASHA logo" />
+      </a>
+      <div class="nav-actions">
+        <button type="button" id="languageToggle" class="btn btn-outline" onclick="toggleLanguage()">العربية</button>
+        <input type="text" id="searchInput" class="search-box" placeholder="Search clothing..." data-i18n-placeholder="search" onkeyup="renderStore()" />
+        <button type="button" class="btn btn-amber" onclick="openModal('addModal')" data-i18n="addClothing">+ Add Clothing</button>
+        <button type="button" class="btn btn-outline" onclick="openModal('wishModal')">♡ <span data-i18n="wishlist">Wishlist</span> (<span id="wishCount">0</span>)</button>
+        <a class="btn btn-dark" href="https://wa.me/201144410012" target="_blank" rel="noopener" style="text-decoration:none;" data-i18n="contactUs">Contact Us</a>
+      </div>
     </div>
   </header>
 
-  <!-- Main Store Architecture -->
-  <main class="max-w-7xl mx-auto px-6 py-12 grid grid-cols-1 lg:grid-cols-12 gap-12">
-    
-    <!-- Product Grid (8 Cols) -->
-    <div class="lg:col-span-8 space-y-6">
-      <h2 class="text-xl font-bold tracking-tight border-b border-zinc-900 pb-4">Outerwear & Hoodies Collection</h2>
+  <section class="hero">
+    <div class="hero-inner">
+      <div class="hero-tag" data-i18n="heroTag">Winter '26 Collection • Egypt</div>
+      <h1 data-i18n="heroTitle">Warmth Meets Timeless Elegance.</h1>
+      <p data-i18n="heroDescription">Curated winter coats, heavy knitwear, and tailored trousers. Contact us to confirm availability and place an order.</p>
+      <button type="button" class="btn btn-outline" onclick="document.getElementById('catalog').scrollIntoView({behavior:'smooth'})">
+        <span data-i18n="browseCollection">Browse Collection</span>
+      </button>
+    </div>
+  </section>
 
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-        <template x-for="product in products" :key="product.id">
-          <div class="group bg-zinc-900/40 border border-zinc-800 rounded-2xl p-4 flex flex-col justify-between">
-            <div class="relative overflow-hidden rounded-xl aspect-[4/5] bg-zinc-900">
-              <img :src="product.image" :alt="product.name" class="object-cover w-full h-full group-hover:scale-105 transition duration-500">
-            </div>
-            <div class="mt-4 space-y-2">
-              <h3 class="text-sm font-semibold text-zinc-200" x-text="product.name"></h3>
-              <div class="flex items-center justify-between">
-                <span class="text-sm font-bold" x-text="`${product.priceEGP} EGP`"></span>
-                <button @click="addToCart(product)" class="bg-zinc-100 text-zinc-950 text-xs font-semibold px-4 py-2 rounded-lg hover:bg-white transition">
-                  Add to Cart
-                </button>
-              </div>
-            </div>
-          </div>
-        </template>
+  <main id="catalog" class="container">
+    <div class="toolbar">
+      <div class="filters" id="filterBar">
+        <button type="button" class="filter-btn active" onclick="setCategory('all', this)" data-i18n="allItems">All Items</button>
+        <button type="button" class="filter-btn" onclick="setCategory('jackets', this)" data-i18n="jackets">Jackets</button>
+        <button type="button" class="filter-btn" onclick="setCategory('tops', this)" data-i18n="topsSweaters">Tops &amp; Sweaters</button>
+        <button type="button" class="filter-btn" onclick="setCategory('pants', this)" data-i18n="pants">Pants</button>
       </div>
+      <select id="sortSelect" class="sort-select" onchange="renderStore()">
+        <option value="default" data-i18n="sortFeatured">Sort: Featured</option>
+        <option value="low" data-i18n="sortLow">Price: Low to High</option>
+        <option value="high" data-i18n="sortHigh">Price: High to Low</option>
+      </select>
     </div>
 
-    <!-- Sticky Checkout Panel (4 Cols) -->
-    <div class="lg:col-span-4">
-      <div class="sticky top-28 bg-zinc-950 border border-zinc-800 rounded-3xl p-6 space-y-6 shadow-xl">
-        <div class="flex items-center justify-between border-b border-zinc-800 pb-4">
-          <h2 class="font-bold text-base">Your Cart</h2>
-          <span class="text-xs text-zinc-400" x-text="cartItemCount + ' items'"></span>
-        </div>
-
-        <!-- Cart List -->
-        <div class="space-y-3 max-h-48 overflow-y-auto pr-1">
-          <template x-for="item in cart" :key="item.id">
-            <div class="flex items-center justify-between bg-zinc-900 p-3 rounded-xl border border-zinc-800 text-xs">
-              <div>
-                <p class="font-semibold text-zinc-200" x-text="item.name"></p>
-                <p class="text-zinc-500" x-text="`Qty: ${item.qty} × ${item.priceEGP} EGP`"></p>
-              </div>
-              <button @click="removeFromCart(item.id)" class="text-red-400 hover:text-red-300">Remove</button>
-            </div>
-          </template>
-          <div x-show="cart.length === 0" class="text-center py-6 text-zinc-500 text-xs">
-            Your cart is empty.
-          </div>
-        </div>
-
-        <!-- Total -->
-        <div class="border-t border-zinc-800 pt-4 flex justify-between text-base font-bold">
-          <span>Total:</span>
-          <span class="font-mono text-white" x-text="totalEGP + ' EGP'"></span>
-        </div>
-
-        <!-- Checkout Form -->
-        <form @submit.prevent="processCheckout" class="space-y-4">
-          <div>
-            <label class="text-[10px] font-bold uppercase tracking-wider text-zinc-400 block mb-1">Full Name</label>
-            <input type="text" x-model="form.name" required class="w-full bg-zinc-900 border border-zinc-800 rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-zinc-500">
-          </div>
-          <div>
-            <label class="text-[10px] font-bold uppercase tracking-wider text-zinc-400 block mb-1">Email</label>
-            <input type="email" x-model="form.email" required class="w-full bg-zinc-900 border border-zinc-800 rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-zinc-500">
-          </div>
-          <div>
-            <label class="text-[10px] font-bold uppercase tracking-wider text-zinc-400 block mb-1">Phone Number</label>
-            <input type="text" x-model="form.phone" required placeholder="010xxxxxxxx" class="w-full bg-zinc-900 border border-zinc-800 rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-zinc-500">
-          </div>
-          <div>
-            <label class="text-[10px] font-bold uppercase tracking-wider text-zinc-400 block mb-1">Delivery Address (City, Street)</label>
-            <input type="text" x-model="form.address" required class="w-full bg-zinc-900 border border-zinc-800 rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-zinc-500">
-          </div>
-
-          <!-- Egyptian Payment Methods -->
-          <div class="space-y-2 pt-2">
-            <label class="text-[10px] font-bold uppercase tracking-wider text-zinc-400 block">Payment Method</label>
-            <div class="grid grid-cols-1 gap-2 text-xs">
-              <label class="flex items-center space-x-3 p-3 rounded-xl border border-zinc-800 bg-zinc-900 cursor-pointer">
-                <input type="radio" value="cod" x-model="form.paymentMethod" class="accent-white">
-                <div>
-                  <p class="font-semibold">Cash on Delivery (COD)</p>
-                  <p class="text-[10px] text-zinc-500">Pay cash upon receiving your order</p>
-                </div>
-              </label>
-
-              <label class="flex items-center space-x-3 p-3 rounded-xl border border-zinc-800 bg-zinc-900 cursor-pointer">
-                <input type="radio" value="instapay" x-model="form.paymentMethod" class="accent-white">
-                <div>
-                  <p class="font-semibold">InstaPay</p>
-                  <p class="text-[10px] text-zinc-500">Instant transfer via IPN handle</p>
-                </div>
-              </label>
-
-              <label class="flex items-center space-x-3 p-3 rounded-xl border border-zinc-800 bg-zinc-900 cursor-pointer">
-                <input type="radio" value="vodafone_cash" x-model="form.paymentMethod" class="accent-white">
-                <div>
-                  <p class="font-semibold">Vodafone Cash</p>
-                  <p class="text-[10px] text-zinc-500">Transfer to merchant mobile wallet</p>
-                </div>
-              </label>
-
-              <label class="flex items-center space-x-3 p-3 rounded-xl border border-zinc-800 bg-zinc-900 cursor-pointer">
-                <input type="radio" value="egypt_card" x-model="form.paymentMethod" class="accent-white">
-                <div>
-                  <p class="font-semibold">Egyptian Bank Card (Visa / Mastercard)</p>
-                  <p class="text-[10px] text-zinc-500">Pay securely online with local debit/credit</p>
-                </div>
-              </label>
-            </div>
-          </div>
-
-          <button type="submit" class="w-full bg-white text-zinc-950 font-bold py-3 rounded-xl text-xs uppercase tracking-wider hover:bg-zinc-200 transition">
-            Place Order
-          </button>
-        </form>
-      </div>
-    </div>
+    <div class="grid" id="productGrid"></div>
   </main>
 
-  <!-- Script Logic -->
+  <footer>
+    <span data-i18n="footerCopy">© 2026 RASHA Winter Fashion Egypt • Contact us on WhatsApp for availability and orders</span>
+  </footer>
+
+  <!-- ADD CUSTOM CLOTHING MODAL -->
+  <div id="addModal" class="overlay center">
+    <div class="modal-box">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+        <h3 data-i18n="addItemTitle">Add New Clothing Item</h3>
+        <button type="button" class="btn btn-outline" onclick="closeModal('addModal')">✕</button>
+      </div>
+      <form onsubmit="handleAddClothing(event)">
+        <input type="text" id="newName" class="form-input" required placeholder="Clothing Name (e.g. Wool Blazer)" data-i18n-placeholder="newName" />
+        <select id="newCat" class="form-input">
+          <option value="jackets" data-i18n="categoryJackets">Category: Jackets</option>
+          <option value="tops" data-i18n="categoryTops">Category: Tops</option>
+          <option value="pants" data-i18n="categoryPants">Category: Pants</option>
+        </select>
+        <input type="number" id="newPrice" class="form-input" required min="1" placeholder="Price in EGP (e.g. 1500)" data-i18n-placeholder="newPrice" />
+        <input type="text" id="newDesc" class="form-input" required placeholder="Short Description" data-i18n-placeholder="newDescription" />
+        <input type="text" id="newColors" class="form-input" placeholder="Colors, comma-separated (optional)" data-i18n-placeholder="newColors" />
+        <input type="url" id="newImg" class="form-input" placeholder="Image URL (leave empty for default photo)" data-i18n-placeholder="imageUrl" />
+        <button type="submit" class="btn btn-dark" style="width:100%;" data-i18n="saveItem">Save &amp; Publish Item</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- WISHLIST DRAWER -->
+  <div id="wishModal" class="overlay">
+    <div class="drawer">
+      <div class="drawer-header">
+        <h3 data-i18n="savedWishlist">Saved Wishlist</h3>
+        <button type="button" class="btn btn-outline" onclick="closeModal('wishModal')" aria-label="Close" data-i18n-aria-label="close">✕</button>
+      </div>
+      <div class="drawer-body" id="wishBody"></div>
+    </div>
+  </div>
+
   <script>
-    function storeApp() {
-      return {
-        cart: JSON.parse(localStorage.getItem('egypt_store_cart')) || [],
-        form: { name: '', email: '', phone: '', address: '', paymentMethod: 'cod' },
-        products: [
-          { id: 'item_1', name: 'Brown Zebra Overshirt', priceEGP: 650, image: '<img src="https://www.image2url.com/r2/default/images/1794787274775-ffe4d00c-7fa2-4673-9d84-197e1bb84fe7.jpeg" alt="image" />' },
-          { id: 'item_2', name: 'Aztec Patterned Wool Shacket', priceEGP: 700, image: 'image (1).jpg' },
-          { id: 'item_3', name: 'Vintage Forest Fleece Jacket', priceEGP: 720, image: 'image (2).jpg' },
-          { id: 'item_4', name: 'Classic Brown Zebra Jacket', priceEGP: 650, image: 'image (3).png' },
-          { id: 'item_5', name: 'Rustic Geometric Fleece Shacket', priceEGP: 700, image: 'image (4).jpg' },
-          { id: 'item_6', name: 'Black Plaid Cropped Flannel', priceEGP: 580, image: 'image (5).jpg' },
-          { id: 'item_7', name: 'Black Script Oversized Hoodie', priceEGP: 850, image: 'image (6).jpg' },
-          { id: 'item_8', name: 'Cream Checkered Pocket Shacket', priceEGP: 600, image: 'image (7).jpg' },
-          { id: 'item_9', name: 'Ivory Script Oversized Hoodie', priceEGP: 850, priceUSD: 18, image: 'image (8).jpg' },
-          { id: 'item_10', name: 'Sage Green Script Hoodie', priceEGP: 850, image: 'image (9).jpg' }
-        ],
-        get cartItemCount() { return this.cart.reduce((s, i) => s + i.qty, 0); },
-        get totalEGP() { return this.cart.reduce((s, i) => s + (i.priceEGP * i.qty), 0); },
-        addToCart(p) {
-          let match = this.cart.find(i => i.id === p.id);
-          match ? match.qty++ : this.cart.push({ ...p, qty: 1 });
-          localStorage.setItem('egypt_store_cart', JSON.stringify(this.cart));
-        },
-        removeFromCart(id) {
-          this.cart = this.cart.filter(i => i.id !== id);
-          localStorage.setItem('egypt_store_cart', JSON.stringify(this.cart));
-        },
-        processCheckout() {
-          if (this.cart.length === 0) {
-            alert('Your cart is empty.');
-            return;
-          }
-          alert(`Order placed successfully using ${this.form.paymentMethod.toUpperCase()}! We will contact you at ${this.form.phone} to confirm delivery.`);
-          this.cart = [];
-          localStorage.removeItem('egypt_store_cart');
-          this.form = { name: '', email: '', phone: '', address: '', paymentMethod: 'cod' };
+    var currentLanguage = "en";
+    var translations = {
+      en: {
+        documentTitle: "RASHA (RE) | Winter Clothing Store — Egypt",
+        search: "Search clothing...",
+        addClothing: "+ Add Clothing",
+        wishlist: "Wishlist",
+        bag: "Bag",
+        contactUs: "Contact Us",
+        heroTag: "Winter '26 Collection • Egypt",
+        heroTitle: "Warmth Meets Timeless Elegance.",
+        heroDescription: "Curated winter coats, heavy knitwear, and tailored trousers. Contact us to confirm availability and place an order.",
+        browseCollection: "Browse Collection",
+        allItems: "All Items",
+        jackets: "Jackets",
+        topsSweaters: "Tops & Sweaters",
+        pants: "Pants",
+        sortFeatured: "Sort: Featured",
+        sortLow: "Price: Low to High",
+        sortHigh: "Price: High to Low",
+        cancelToolTitle: "Store owner: prepare an out-of-stock cancellation",
+        cancelToolDescription: "Orders are sent through WhatsApp and are not saved on this site. Enter the customer's number and order reference, then review and send the message in WhatsApp.",
+        cancelPhone: "Customer WhatsApp number (e.g. +2010xxxxxxxx)",
+        cancelReference: "Order reference (or customer name for older orders)",
+        prepareCancellation: "Prepare cancellation message",
+        cancellationMessage: "Cancellation message",
+        copyCancellation: "Copy cancellation message",
+        openCustomerWhatsApp: "Open customer's WhatsApp",
+        footerCopy: "© 2026 RASHA Winter Fashion Egypt • Contact us on WhatsApp for availability and orders",
+        addItemTitle: "Add New Clothing Item",
+        newName: "Clothing Name (e.g. Wool Blazer)",
+        categoryJackets: "Category: Jackets",
+        categoryTops: "Category: Tops",
+        categoryPants: "Category: Pants",
+        newPrice: "Price in EGP (e.g. 1500)",
+        newDescription: "Short Description",
+        newColors: "Colors, comma-separated (optional)",
+        imageUrl: "Image URL (leave empty for default photo)",
+        saveItem: "Save & Publish Item",
+        savedWishlist: "Saved Wishlist",
+        close: "Close",
+        bagCheckout: "Shopping Bag & Checkout",
+        promoCode: "Code: RASHA10",
+        apply: "Apply",
+        subtotal: "Subtotal:",
+        delivery: "Delivery:",
+        discount: "Discount (10%):",
+        total: "Total:",
+        fullName: "Full Name",
+        phone: "Phone (e.g. 010xxxxxxxx)",
+        cairo: "Cairo",
+        giza: "Giza",
+        alexandria: "Alexandria",
+        otherGovernorate: "Other Governorate",
+        address: "Street & Building Number",
+        cashOnArrival: "Cash on Arrival (COD)",
+        vodafoneCash: "Vodafone Cash",
+        instapay: "InstaPay",
+        cardsUnavailable: "Egyptian cards (Meeza / Visa / Mastercard) — unavailable",
+        continueWhatsApp: "Continue to WhatsApp",
+        completeOrder: "Complete Your Order",
+        openWhatsApp: "Open WhatsApp app",
+        whatsAppFallback: "If the app doesn't open, copy this message and send it to +20 114 441 0012 in WhatsApp.",
+        orderMessage: "Order message to copy",
+        copyOrder: "Copy order message",
+        backToStore: "Back to Store",
+        noSearchResults: "No clothing items matched your search.",
+        noWishlist: "No saved items yet.",
+        addToBag: "Contact on WhatsApp",
+        contactInquiry: "Hello RASHA, I'm interested in {item}. Price: {price}.{color}",
+        color: "Color",
+        chooseColor: "Choose color",
+        selectColorAlert: "Please choose a color before adding this item.",
+        colorBlack: "Black",
+        colorWhite: "White",
+        colorBeige: "Beige",
+        colorBrown: "Brown",
+        colorGray: "Gray",
+        colorNavy: "Navy",
+        colorRed: "Red",
+        colorGreen: "Green",
+        emptyBag: "Your Rasha bag is empty.",
+        invalidPromo: "Invalid promo code. Enter RASHA10 for 10% off.",
+        sendVodafone: "Send {amount} to Vodafone Cash: 01144410012. Check the recipient name before transferring. Your order stays pending until the transfer is verified.",
+        sendInstaPay: "Send {amount} via InstaPay to 01144410012. Check the recipient name before transferring. Your order stays pending until the transfer is verified.",
+        whatsappInstructions: "After you continue, WhatsApp will open with your order details. Tap Send to submit your order.",
+        cardUnavailableAlert: "Card checkout is not available until a payment gateway account is configured.",
+        waNewOrder: "New RASHA order request",
+        waOrderReference: "Order reference",
+        waName: "Name",
+        waPhone: "Phone",
+        waCity: "City",
+        waAddress: "Address",
+        waPaymentMethod: "Payment method",
+        waItems: "Items:",
+        waSubtotal: "Subtotal",
+        waDelivery: "Delivery",
+        waFree: "FREE",
+        free: "FREE",
+        waDiscount: "Discount",
+        waTotal: "Total",
+        waTransferRecipient: "Transfer recipient",
+        waReceipt: "I will send the transfer receipt/reference in this chat. Please verify payment before confirming the order.",
+        orderSuccessTransfer: "For transfer orders, send the payment and share its receipt in the chat. The order is pending until you verify payment.",
+        orderSuccessOther: "The order is not submitted until you tap Send in WhatsApp.",
+        orderSuccessIntro: "Order reference: {reference}. WhatsApp will open with your order details. Tap Send to submit them. ",
+        cancelInvalidPhone: "Enter a valid customer WhatsApp number, including the country code if needed.",
+        cancellationTemplate: "Hi, we're sorry, but order {reference} has been cancelled because an item is out of stock. If you have already paid, please reply here so we can arrange the next steps. We apologize for the inconvenience.",
+        cancelReady: "Review the message, then open WhatsApp and tap Send to notify the customer.",
+        cancelCopied: "Cancellation message copied. Paste it into the customer's WhatsApp chat.",
+        copyUnavailableCancel: "Automatic copy isn't available. The message is selected; copy it and paste it into WhatsApp.",
+        copySelectedCancel: "The message is selected; copy it and paste it into WhatsApp.",
+        orderCopied: "Order message copied. Paste it into your WhatsApp chat.",
+        copyUnavailableOrder: "Automatic copy isn't available. The message is selected; copy it and paste it into WhatsApp.",
+        copySelectedOrder: "The message is selected; copy it and paste it into WhatsApp.",
+        categoryPillJackets: "Jackets",
+        categoryPillTops: "Tops",
+        categoryPillPants: "Pants"
+      },
+      ar: {
+        documentTitle: "راشا | متجر ملابس شتوية — مصر",
+        search: "ابحث عن الملابس...",
+        addClothing: "+ أضف قطعة ملابس",
+        wishlist: "قائمة الأمنيات",
+        bag: "حقيبة التسوق",
+        contactUs: "تواصل معنا",
+        heroTag: "تشكيلة شتاء ٢٠٢٦ • مصر",
+        heroTitle: "دفء وأناقة تدوم.",
+        heroDescription: "معاطف شتوية وكنزات ثقيلة وبناطيل أنيقة. تواصل معنا للتأكد من التوفر وإتمام الطلب.",
+        browseCollection: "تصفح التشكيلة",
+        allItems: "كل المنتجات",
+        jackets: "جاكيتات",
+        topsSweaters: "توبات وكنزات",
+        pants: "بناطيل",
+        sortFeatured: "الترتيب: المميزة",
+        sortLow: "السعر: من الأقل إلى الأعلى",
+        sortHigh: "السعر: من الأعلى إلى الأقل",
+        cancelToolTitle: "لصاحب المتجر: تجهيز رسالة إلغاء لعدم توفر المنتج",
+        cancelToolDescription: "تُرسل الطلبات عبر واتساب ولا تُحفظ في هذا الموقع. أدخل رقم العميل ورقم الطلب، ثم راجع الرسالة وأرسلها عبر واتساب.",
+        cancelPhone: "رقم واتساب العميل (مثال: ‎+2010xxxxxxxx)",
+        cancelReference: "رقم الطلب (أو اسم العميل للطلبات القديمة)",
+        prepareCancellation: "تجهيز رسالة الإلغاء",
+        cancellationMessage: "رسالة الإلغاء",
+        copyCancellation: "نسخ رسالة الإلغاء",
+        openCustomerWhatsApp: "افتح واتساب العميل",
+        footerCopy: "© ٢٠٢٦ راشا للأزياء الشتوية في مصر • تواصل معنا عبر واتساب للتوفر والطلبات",
+        addItemTitle: "إضافة قطعة ملابس جديدة",
+        newName: "اسم القطعة (مثال: بليزر صوف)",
+        categoryJackets: "التصنيف: جاكيتات",
+        categoryTops: "التصنيف: توبات",
+        categoryPants: "التصنيف: بناطيل",
+        newPrice: "السعر بالجنيه المصري (مثال: ١٥٠٠)",
+        newDescription: "وصف قصير",
+        newColors: "الألوان مفصولة بفواصل (اختياري)",
+        imageUrl: "رابط الصورة (اتركه فارغًا لاستخدام الصورة الافتراضية)",
+        saveItem: "حفظ ونشر القطعة",
+        savedWishlist: "قائمة الأمنيات المحفوظة",
+        close: "إغلاق",
+        bagCheckout: "حقيبة التسوق وإتمام الطلب",
+        promoCode: "الرمز: RASHA10",
+        apply: "تطبيق",
+        subtotal: "المجموع الفرعي:",
+        delivery: "التوصيل:",
+        discount: "الخصم (١٠٪):",
+        total: "الإجمالي:",
+        fullName: "الاسم بالكامل",
+        phone: "رقم الهاتف (مثال: 010xxxxxxxx)",
+        cairo: "القاهرة",
+        giza: "الجيزة",
+        alexandria: "الإسكندرية",
+        otherGovernorate: "محافظة أخرى",
+        address: "الشارع ورقم المبنى",
+        cashOnArrival: "الدفع عند الاستلام",
+        vodafoneCash: "فودافون كاش",
+        instapay: "إنستا باي",
+        cardsUnavailable: "البطاقات المصرية (ميزة / Visa / Mastercard) — غير متاحة حاليًا",
+        continueWhatsApp: "المتابعة إلى واتساب",
+        completeOrder: "أكمل طلبك",
+        openWhatsApp: "افتح تطبيق واتساب",
+        whatsAppFallback: "إذا لم يفتح التطبيق، انسخ الرسالة وأرسلها إلى +20 114 441 0012 عبر واتساب.",
+        orderMessage: "رسالة الطلب للنسخ",
+        copyOrder: "نسخ رسالة الطلب",
+        backToStore: "العودة إلى المتجر",
+        noSearchResults: "لا توجد منتجات تطابق بحثك.",
+        noWishlist: "لا توجد منتجات محفوظة بعد.",
+        addToBag: "تواصل عبر واتساب",
+        contactInquiry: "مرحبًا راشا، أنا مهتم بـ {item}. السعر: {price}.{color}",
+        color: "اللون",
+        chooseColor: "اختر اللون",
+        selectColorAlert: "يرجى اختيار اللون قبل إضافة القطعة.",
+        colorBlack: "أسود",
+        colorWhite: "أبيض",
+        colorBeige: "بيج",
+        colorBrown: "بني",
+        colorGray: "رمادي",
+        colorNavy: "كحلي",
+        colorRed: "أحمر",
+        colorGreen: "أخضر",
+        emptyBag: "حقيبة راشا فارغة.",
+        invalidPromo: "رمز الخصم غير صحيح. أدخل RASHA10 للحصول على خصم ١٠٪.",
+        sendVodafone: "أرسل {amount} إلى فودافون كاش: 01144410012. تأكد من اسم المستلم قبل التحويل. سيظل الطلب قيد الانتظار حتى يتم التحقق من التحويل.",
+        sendInstaPay: "أرسل {amount} عبر إنستا باي إلى 01144410012. تأكد من اسم المستلم قبل التحويل. سيظل الطلب قيد الانتظار حتى يتم التحقق من التحويل.",
+        whatsappInstructions: "بعد المتابعة، افتح واتساب وأرسل تفاصيل طلبك.",
+        cardUnavailableAlert: "الدفع بالبطاقات غير متاح حتى يتم إعداد حساب لدى بوابة دفع.",
+        waNewOrder: "طلب جديد من راشا",
+        waOrderReference: "رقم الطلب",
+        waName: "الاسم",
+        waPhone: "الهاتف",
+        waCity: "المدينة",
+        waAddress: "العنوان",
+        waPaymentMethod: "طريقة الدفع",
+        waItems: "المنتجات:",
+        waSubtotal: "المجموع الفرعي",
+        waDelivery: "التوصيل",
+        waFree: "مجاني",
+        free: "مجاني",
+        waDiscount: "الخصم",
+        waTotal: "الإجمالي",
+        waTransferRecipient: "بيانات التحويل",
+        waReceipt: "سأرسل إيصال التحويل أو رقمه في هذه المحادثة. يرجى التحقق من الدفع قبل تأكيد الطلب.",
+        orderSuccessTransfer: "للطلبات المدفوعة بالتحويل، أرسل المبلغ ثم أرسل الإيصال في المحادثة. يظل الطلب قيد الانتظار حتى تتحقق من الدفع.",
+        orderSuccessOther: "لن يتم إرسال الطلب حتى تضغط على إرسال في واتساب.",
+        orderSuccessIntro: "رقم الطلب: {reference}. ستظهر تفاصيل طلبك في واتساب. اضغط على إرسال لإتمام الإرسال. ",
+        cancelInvalidPhone: "أدخل رقم واتساب صحيحًا للعميل، مع رمز الدولة عند الحاجة.",
+        cancellationTemplate: "مرحبًا، نعتذر منك. تم إلغاء الطلب {reference} لعدم توفر أحد المنتجات. إذا كنت قد دفعت بالفعل، يرجى الرد هنا لترتيب الخطوات التالية. نعتذر عن الإزعاج.",
+        cancelReady: "راجع الرسالة، ثم افتح واتساب واضغط على إرسال لإبلاغ العميل.",
+        cancelCopied: "تم نسخ رسالة الإلغاء. الصقها في محادثة واتساب مع العميل.",
+        copyUnavailableCancel: "النسخ التلقائي غير متاح. تم تحديد الرسالة؛ انسخها والصقها في واتساب.",
+        copySelectedCancel: "تم تحديد الرسالة؛ انسخها والصقها في واتساب.",
+        orderCopied: "تم نسخ رسالة الطلب. الصقها في محادثة واتساب.",
+        copyUnavailableOrder: "النسخ التلقائي غير متاح. تم تحديد الرسالة؛ انسخها والصقها في واتساب.",
+        copySelectedOrder: "تم تحديد الرسالة؛ انسخها والصقها في واتساب.",
+        categoryPillJackets: "جاكيتات",
+        categoryPillTops: "توبات",
+        categoryPillPants: "بناطيل"
+      }
+    };
+
+    function translate(key) {
+      return translations[currentLanguage][key] || translations.en[key] || key;
+    }
+
+    function toggleLanguage() {
+      currentLanguage = currentLanguage === "en" ? "ar" : "en";
+      applyLanguage();
+    }
+
+    function applyLanguage() {
+      document.documentElement.lang = currentLanguage;
+      document.documentElement.dir = currentLanguage === "ar" ? "rtl" : "ltr";
+      document.title = translate("documentTitle");
+      var textElements = document.querySelectorAll("[data-i18n]");
+      for (var i = 0; i < textElements.length; i++) {
+        textElements[i].textContent = translate(textElements[i].getAttribute("data-i18n"));
+      }
+      var placeholders = document.querySelectorAll("[data-i18n-placeholder]");
+      for (var j = 0; j < placeholders.length; j++) {
+        placeholders[j].placeholder = translate(placeholders[j].getAttribute("data-i18n-placeholder"));
+      }
+      var ariaLabels = document.querySelectorAll("[data-i18n-aria-label]");
+      for (var k = 0; k < ariaLabels.length; k++) {
+        ariaLabels[k].setAttribute("aria-label", translate(ariaLabels[k].getAttribute("data-i18n-aria-label")));
+      }
+      document.getElementById("languageToggle").textContent = currentLanguage === "ar" ? "English" : "العربية";
+      renderStore();
+      if (document.getElementById("wishModal").classList.contains("open")) renderWishlist();
+    }
+
+    function getProductName(item) {
+      return currentLanguage === "ar" && item.nameAr ? item.nameAr : item.name;
+    }
+
+    function getProductDescription(item) {
+      return currentLanguage === "ar" && item.descAr ? item.descAr : item.desc;
+    }
+
+    function getCategoryName(category) {
+      var key = category === "jackets" ? "categoryPillJackets" : category === "tops" ? "categoryPillTops" : "categoryPillPants";
+      return translate(key);
+    }
+
+    function escapeHTML(value) {
+      return String(value).replace(/[&<>"']/g, function(character) {
+        return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[character];
+      });
+    }
+
+    function getColorLabel(color) {
+      var colorKeys = {
+        black: "colorBlack",
+        white: "colorWhite",
+        beige: "colorBeige",
+        brown: "colorBrown",
+        gray: "colorGray",
+        navy: "colorNavy",
+        red: "colorRed",
+        green: "colorGreen"
+      };
+      var key = colorKeys[color.toLowerCase()];
+      return key ? translate(key) : color;
+    }
+
+    function renderColorSelect(item, id) {
+      if (!item.colors || item.colors.length === 0) return "";
+      var options = '<option value="">' + translate("chooseColor") + '</option>';
+      for (var i = 0; i < item.colors.length; i++) {
+        var color = item.colors[i];
+        options += '<option value="' + escapeHTML(color) + '">' + escapeHTML(getColorLabel(color)) + '</option>';
+      }
+      return '<select id="' + id + '" class="color-select" aria-label="' + escapeHTML(translate("color")) + '">' + options + '</select>';
+    }
+
+    function formatPrice(price) {
+      return price.toLocaleString(currentLanguage === "ar" ? "ar-EG" : "en-EG") + (currentLanguage === "ar" ? " ج.م" : " EGP");
+    }
+
+    var items = [
+      { id: 1, name: "Patterned Wool Shirt", nameAr: "قميص صوف بنقوش", category: "jackets", price: 600, desc: "Patterned wool shirt available in several colors.", descAr: "قميص صوف بنقوش متوفر بعدة ألوان.", colors: ["Black And Grey ","Red And Grey" ], colorsAr: ["اسود ورماديو", "احمر ورمادي" ], img: "https://i.postimg.cc/Gt6KKd5f/Whats-App-Image-2026-11-16-at-12-36-11-AM.jpg" },
+      { id: 3, name: "Shearling Aviator Jacket", nameAr: "جاكيت طيار ببطانة دافئة", category: "jackets", price: 650, desc: "Faux-suede moto jacket lined with thick fleece.", descAr: "جاكيت شمواه صناعي مبطن بفليس سميك.", img: "https://i.postimg.cc/L6d0jVKy/Whats-App-Image-2026-11-16-at-12-36-33-AM.jpg" },
+      { id: 4, name: "Chunky Cable-Knit Turtleneck", nameAr: "كنزة سميكة محبوكة برقبة عالية", category: "tops", price: 980, desc: "Heavyweight combed cotton fisherman knit.", descAr: "كنزة ثقيلة من القطن الممشط المحبوك.", img: "https://i.postimg.cc/GpZv6qjg/Whats-App-Image-2026-11-16-at-12-36-39-AM-(1).jpg" },
+      { id: 5, name: "Cashmere-Blend Ribbed Top", nameAr: "بلوزة مضلعة بمزيج الكشمير", category: "tops", price: 850, desc: "Soft merino and cashmere layering top.", descAr: "بلوزة ناعمة بطبقات من صوف الميرينو والكشمير.", img: "https://i.postimg.cc/q7t8m92Q/Whats-App-Image-2026-11-16-at-12-36-38-AM.jpg" },
+      { id: 6, name: "Oversized Half-Zip Fleece", nameAr: "كنزة واسعة بسحاب نصفي", category: "tops", price: 920, desc: "Brushed Egyptian cotton pullover with zip neck.", descAr: "كنزة من القطن المصري الناعم بياقة بسحاب.", img: "https://i.postimg.cc/mZVtHmHH/Whats-App-Image-2026-11-16-at-12-36-40-AM-(1).jpg" },
+      { id: 7, name: "Tailored Wool Wide-Leg Pants", nameAr: "بنطال صوف واسع بقصة أنيقة", category: "pants", price: 1150, desc: "High-waisted pleated trousers with full lining.", descAr: "بنطال بخصر عالٍ وثنيات وبطانة كاملة.", img: "https://i.postimg.cc/htQjNg3B/Whats-App-Image-2026-11-16-at-12-36-40-AM-(2).jpg" },
+      { id: 8, name: "Fleece-Lined Corduroy Trousers", nameAr: "بنطال كوردروي مبطن بالفليس", category: "pants", price: 1050, desc: "Straight-leg corduroy bonded with thermal fleece.", descAr: "بنطال كوردروي مستقيم مبطن بفليس حراري.", img: "https://i.postimg.cc/0NgQs3Ts/Whats-App-Image-2026-11-16-at-12-36-40-AM.jpg" },
+      { id: 9, name: "Heavyweight Knit Lounge Pants", nameAr: "بنطال منزلي محبوك وثقيل", category: "pants", price: 890, desc: "Ribbed wool-cotton wide trousers with drawstring.", descAr: "بنطال واسع من مزيج الصوف والقطن مع رباط.", img: "https://i.postimg.cc/1tB5Dz4C/Whats-App-Image-2026-11-16-at-12-36-41-AM.jpg" }
+    ];
+
+    var currentCategory = "all";
+    var wishlist = [];
+
+    function openModal(id) {
+      document.getElementById(id).classList.add("open");
+      if (id === "wishModal") renderWishlist();
+    }
+
+    function closeModal(id) {
+      document.getElementById(id).classList.remove("open");
+    }
+
+    function setCategory(cat, btnElement) {
+      currentCategory = cat;
+      var buttons = document.querySelectorAll(".filter-btn");
+      for (var i = 0; i < buttons.length; i++) {
+        buttons[i].classList.remove("active");
+      }
+      btnElement.classList.add("active");
+      renderStore();
+    }
+
+    function renderStore() {
+      var query = document.getElementById("searchInput").value.toLowerCase();
+      var sortBy = document.getElementById("sortSelect").value;
+      var grid = document.getElementById("productGrid");
+
+      var list = items.filter(function(item) {
+        var catMatch = (currentCategory === "all" || item.category === currentCategory);
+        var searchableText = [item.name, item.nameAr || "", item.desc, item.descAr || ""].join(" ").toLowerCase();
+        var textMatch = searchableText.indexOf(query) !== -1;
+        return catMatch && textMatch;
+      });
+
+      if (sortBy === "low") list.sort(function(a, b) { return a.price - b.price; });
+      if (sortBy === "high") list.sort(function(a, b) { return b.price - a.price; });
+
+      if (list.length === 0) {
+        grid.innerHTML = "<p style='grid-column:1/-1; text-align:center; padding:40px; color:#78716c;'>" + translate("noSearchResults") + "</p>";
+        return;
+      }
+
+      var html = "";
+      for (var i = 0; i < list.length; i++) {
+        var p = list[i];
+        var wished = wishlist.indexOf(p.id) !== -1 ? "♥" : "♡";
+        html +=
+          '<div class="card">' +
+            '<div class="card-img-wrap">' +
+              '<img src="' + p.img + '" alt="' + getProductName(p) + '" onerror="this.style.display=\'none\'" />' +
+              '<span class="cat-tag">' + getCategoryName(p.category) + '</span>' +
+              '<button type="button" class="wish-btn" onclick="toggleWish(' + p.id + ')">' + wished + '</button>' +
+            '</div>' +
+            '<div class="card-body">' +
+              '<div>' +
+                '<div class="card-title">' + getProductName(p) + '</div>' +
+                '<div class="card-desc">' + getProductDescription(p) + '</div>' +
+              '</div>' +
+              '<div>' +
+                '<div class="card-price">' + formatPrice(p.price) + '</div>' +
+                '<div class="card-actions">' +
+                  renderColorSelect(p, "color-" + p.id) +
+                  '<button type="button" class="btn btn-dark" style="flex:1;" onclick="contactProduct(' + p.id + ')">' + translate("addToBag") + '</button>' +
+                '</div>' +
+              '</div>' +
+            '</div>' +
+          '</div>';
+      }
+      grid.innerHTML = html;
+    }
+
+    function handleAddClothing(e) {
+      e.preventDefault();
+      var name = document.getElementById("newName").value.trim();
+      var category = document.getElementById("newCat").value;
+      var price = Number(document.getElementById("newPrice").value);
+      var desc = document.getElementById("newDesc").value.trim();
+      var colors = document.getElementById("newColors").value.split(",").map(function(color) { return color.trim(); }).filter(function(color) { return color.length > 0; });
+      var img = document.getElementById("newImg").value.trim() || "https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=600&q=80";
+
+      items.unshift({ id: Date.now(), name: name, category: category, price: price, desc: desc, colors: colors, img: img });
+      e.target.reset();
+      closeModal("addModal");
+      renderStore();
+    }
+
+    function toggleWish(id) {
+      var idx = wishlist.indexOf(id);
+      if (idx !== -1) wishlist.splice(idx, 1);
+      else wishlist.push(id);
+      document.getElementById("wishCount").textContent = wishlist.length;
+      renderStore();
+      renderWishlist();
+    }
+
+    function renderWishlist() {
+      var box = document.getElementById("wishBody");
+      if (wishlist.length === 0) {
+        box.innerHTML = "<p style='text-align:center; color:#78716c; padding:40px 0;'>" + translate("noWishlist") + "</p>";
+        return;
+      }
+      var html = "";
+      for (var i = 0; i < wishlist.length; i++) {
+        var item = items.find(function(x) { return x.id === wishlist[i]; });
+        if (!item) continue;
+        html +=
+          '<div class="cart-item">' +
+            '<div><strong>' + getProductName(item) + '</strong><div style="font-size:12px; color:#78350f;">' + formatPrice(item.price) + '</div></div>' +
+            renderColorSelect(item, "wish-color-" + item.id) +
+            '<button type="button" class="btn btn-dark" onclick="contactWishProduct(' + item.id + ')">' + translate("addToBag") + '</button>' +
+          '</div>';
+      }
+      box.innerHTML = html;
+    }
+
+    function contactProduct(id, selectedColor) {
+      var item = items.find(function(x) { return x.id === id; });
+      if (!item) return;
+
+      var color = selectedColor || "";
+      if (item.colors && item.colors.length > 0 && !color) {
+        var colorSelect = document.getElementById("color-" + id);
+        color = colorSelect ? colorSelect.value : "";
+        if (!color) {
+          alert(translate("selectColorAlert"));
+          return false;
         }
       }
+
+      var colorText = color ? " " + translate("color") + ": " + getColorLabel(color) : "";
+      var message = translate("contactInquiry")
+        .replace("{item}", getProductName(item))
+        .replace("{price}", formatPrice(item.price))
+        .replace("{color}", colorText);
+      window.open("https://wa.me/201144410012?text=" + encodeURIComponent(message), "_blank", "noopener");
     }
+
+    function contactWishProduct(id) {
+      var colorSelect = document.getElementById("wish-color-" + id);
+      var item = items.find(function(x) { return x.id === id; });
+      if (item && item.colors && item.colors.length > 0 && (!colorSelect || !colorSelect.value)) {
+        alert(translate("selectColorAlert"));
+        return;
+      }
+      contactProduct(id, colorSelect ? colorSelect.value : "");
+    }
+
+    applyLanguage();
   </script>
+<!-- Code injected by live-server -->
+<script>
+	// <![CDATA[  <-- For SVG support
+	if ('WebSocket' in window) {
+		(function () {
+			function refreshCSS() {
+				var sheets = [].slice.call(document.getElementsByTagName("link"));
+				var head = document.getElementsByTagName("head")[0];
+				for (var i = 0; i < sheets.length; ++i) {
+					var elem = sheets[i];
+					var parent = elem.parentElement || head;
+					parent.removeChild(elem);
+					var rel = elem.rel;
+					if (elem.href && typeof rel != "string" || rel.length == 0 || rel.toLowerCase() == "stylesheet") {
+						var url = elem.href.replace(/(&|\?)_cacheOverride=\d+/, '');
+						elem.href = url + (url.indexOf('?') >= 0 ? '&' : '?') + '_cacheOverride=' + (new Date().valueOf());
+					}
+					parent.appendChild(elem);
+				}
+			}
+			var protocol = window.location.protocol === 'http:' ? 'ws://' : 'wss://';
+			var address = protocol + window.location.host + window.location.pathname + '/ws';
+			var socket = new WebSocket(address);
+			socket.onmessage = function (msg) {
+				if (msg.data == 'reload') window.location.reload();
+				else if (msg.data == 'refreshcss') refreshCSS();
+			};
+			if (sessionStorage && !sessionStorage.getItem('IsThisFirstTime_Log_From_LiveServer')) {
+				console.log('Live reload enabled.');
+				sessionStorage.setItem('IsThisFirstTime_Log_From_LiveServer', true);
+			}
+		})();
+	}
+	else {
+		console.error('Upgrade your browser. This Browser is NOT supported WebSocket for Live-Reloading.');
+	}
+	// ]]>
+</script>
+<!-- Code injected by live-server -->
+<script>
+	// <![CDATA[  <-- For SVG support
+	if ('WebSocket' in window) {
+		(function () {
+			function refreshCSS() {
+				var sheets = [].slice.call(document.getElementsByTagName("link"));
+				var head = document.getElementsByTagName("head")[0];
+				for (var i = 0; i < sheets.length; ++i) {
+					var elem = sheets[i];
+					var parent = elem.parentElement || head;
+					parent.removeChild(elem);
+					var rel = elem.rel;
+					if (elem.href && typeof rel != "string" || rel.length == 0 || rel.toLowerCase() == "stylesheet") {
+						var url = elem.href.replace(/(&|\?)_cacheOverride=\d+/, '');
+						elem.href = url + (url.indexOf('?') >= 0 ? '&' : '?') + '_cacheOverride=' + (new Date().valueOf());
+					}
+					parent.appendChild(elem);
+				}
+			}
+			var protocol = window.location.protocol === 'http:' ? 'ws://' : 'wss://';
+			var address = protocol + window.location.host + window.location.pathname + '/ws';
+			var socket = new WebSocket(address);
+			socket.onmessage = function (msg) {
+				if (msg.data == 'reload') window.location.reload();
+				else if (msg.data == 'refreshcss') refreshCSS();
+			};
+			if (sessionStorage && !sessionStorage.getItem('IsThisFirstTime_Log_From_LiveServer')) {
+				console.log('Live reload enabled.');
+				sessionStorage.setItem('IsThisFirstTime_Log_From_LiveServer', true);
+			}
+		})();
+	}
+	else {
+		console.error('Upgrade your browser. This Browser is NOT supported WebSocket for Live-Reloading.');
+	}
+	// ]]>
+</script>
 </body>
 </html>
