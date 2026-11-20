@@ -29,32 +29,34 @@
     .ambient-background::after {
       content: "";
       position: absolute;
-      width: 28rem;
-      aspect-ratio: 1;
-      border-radius: 50%;
-      filter: blur(10px);
-      opacity: 0.55;
+      inset: -100% 0 0;
+      background-repeat: repeat;
       will-change: transform;
     }
     .ambient-background::before {
-      left: -12rem;
-      top: 18%;
-      background: radial-gradient(circle, rgba(217, 119, 6, 0.28), rgba(217, 119, 6, 0));
-      animation: float-orb-one 18s ease-in-out infinite alternate;
+      opacity: 0.65;
+      background-image:
+        radial-gradient(3px 3px at 24px 38px, rgba(255,255,255,0.95) 50%, transparent 100%),
+        radial-gradient(2px 2px at 118px 94px, rgba(255,255,255,0.8) 50%, transparent 100%),
+        radial-gradient(2px 2px at 72px 154px, rgba(120,53,15,0.2) 50%, transparent 100%);
+      background-size: 190px 210px, 260px 280px, 330px 300px;
+      animation: snowfall 24s linear infinite;
     }
     .ambient-background::after {
-      right: -14rem;
-      bottom: 4%;
-      background: radial-gradient(circle, rgba(146, 64, 14, 0.2), rgba(146, 64, 14, 0));
-      animation: float-orb-two 22s ease-in-out infinite alternate;
+      opacity: 0.4;
+      background-image:
+        radial-gradient(4px 4px at 46px 68px, rgba(255,255,255,0.9) 45%, transparent 100%),
+        radial-gradient(2px 2px at 164px 132px, rgba(120,53,15,0.18) 50%, transparent 100%);
+      background-size: 310px 340px, 230px 250px;
+      animation: snowfall-drift 34s linear infinite;
     }
-    @keyframes float-orb-one {
-      0% { transform: translate3d(0, 0, 0) scale(1); }
-      100% { transform: translate3d(18rem, 12rem, 0) scale(1.18); }
+    @keyframes snowfall {
+      from { transform: translate3d(0, 0, 0); }
+      to { transform: translate3d(-35px, 100%, 0); }
     }
-    @keyframes float-orb-two {
-      0% { transform: translate3d(0, 0, 0) scale(1); }
-      100% { transform: translate3d(-16rem, -10rem, 0) scale(1.12); }
+    @keyframes snowfall-drift {
+      from { transform: translate3d(18px, 0, 0); }
+      to { transform: translate3d(65px, 100%, 0); }
     }
 
     /* Top Bar & Header */
@@ -235,6 +237,7 @@
       </div>
       <form onsubmit="handleAddClothing(event)">
         <input type="text" id="newName" class="form-input" required placeholder="Clothing Name (e.g. Wool Blazer)" data-i18n-placeholder="newName" />
+        <input type="text" id="newNameAr" class="form-input" required placeholder="Clothing Name in Arabic" data-i18n-placeholder="newNameAr" lang="ar" dir="rtl" />
         <select id="newCat" class="form-input">
           <option value="jackets" data-i18n="categoryJackets">Category: Jackets</option>
           <option value="tops" data-i18n="categoryTops">Category: Tops</option>
@@ -337,7 +340,9 @@
         openCustomerWhatsApp: "Open customer's WhatsApp",
         footerCopy: "© 2026 RASHA Winter Fashion Egypt • Contact us on WhatsApp for availability and orders",
         addItemTitle: "Add New Clothing Item",
-        newName: "Clothing Name (e.g. Wool Blazer)",
+        newName: "Clothing Name in English",
+        newNameAr: "Clothing Name in Arabic",
+        bothNamesRequired: "Enter the clothing name in both English and Arabic.",
         categoryJackets: "Category: Jackets",
         categoryTops: "Category: Tops",
         categoryPants: "Category: Pants",
@@ -466,7 +471,9 @@
         openCustomerWhatsApp: "افتح واتساب العميل",
         footerCopy: "© ٢٠٢٦ راشا للأزياء الشتوية في مصر • تواصل معنا عبر واتساب للتوفر والطلبات",
         addItemTitle: "إضافة قطعة ملابس جديدة",
-        newName: "اسم القطعة (مثال: بليزر صوف)",
+        newName: "اسم القطعة بالإنجليزية",
+        newNameAr: "اسم القطعة بالعربية",
+        bothNamesRequired: "يرجى إدخال اسم القطعة باللغتين الإنجليزية والعربية.",
         categoryJackets: "التصنيف: جاكيتات",
         categoryTops: "التصنيف: توبات",
         categoryPants: "التصنيف: بناطيل",
@@ -649,17 +656,14 @@
     }
 
     var items = [
-      { id: 1, name: "Patterned Wool Shirt", nameAr: "قميص صوف بنقوش", category: "jackets", price: 600, desc: "Patterned wool shirt available in several colors.", descAr: "قميص صوف بنقوش متوفر بعدة ألوان.", colors: ["Black And Grey ","Red And Grey"
-    
-
-      ], img:"https://i.postimg.cc/Gt6KKd5f/Whats-App-Image-2026-11-16-at-12-36-11-AM.jpg" },
-      { id: 3, name: "Shearling Aviator Jacket", nameAr: "جاكيت طيار ببطانة دافئة", category: "jackets", price: 650, desc: "Faux-suede moto jacket lined with thick fleece.", descAr: "جاكيت شمواه صناعي مبطن بفليس سميك.", img: "https://i.postimg.cc/L6d0jVKy/Whats-App-Image-2026-11-16-at-12-36-33-AM.jpg" },
-      { id: 4, name: "Chunky Cable-Knit Turtleneck", nameAr: "كنزة سميكة محبوكة برقبة عالية", category: "tops", price: 980, desc: "Heavyweight combed cotton fisherman knit.", descAr: "كنزة ثقيلة من القطن الممشط المحبوك.", img: "https://i.postimg.cc/GpZv6qjg/Whats-App-Image-2026-11-16-at-12-36-39-AM-(1).jpg" },
-      { id: 5, name: "Cashmere-Blend Ribbed Top", nameAr: "بلوزة مضلعة بمزيج الكشمير", category: "tops", price: 850, desc: "Soft merino and cashmere layering top.", descAr: "بلوزة ناعمة بطبقات من صوف الميرينو والكشمير.", img: "https://i.postimg.cc/q7t8m92Q/Whats-App-Image-2026-11-16-at-12-36-38-AM.jpg" },
-      { id: 6, name: "Oversized Half-Zip Fleece", nameAr: "كنزة واسعة بسحاب نصفي", category: "tops", price: 920, desc: "Brushed Egyptian cotton pullover with zip neck.", descAr: "كنزة من القطن المصري الناعم بياقة بسحاب.", img: "https://i.postimg.cc/mZVtHmHH/Whats-App-Image-2026-11-16-at-12-36-40-AM-(1).jpg" },
-      { id: 7, name: "Tailored Wool Wide-Leg Pants", nameAr: "بنطال صوف واسع بقصة أنيقة", category: "tops", price: 1150, desc: "High-waisted pleated trousers with full lining.", descAr: "بنطال بخصر عالٍ وثنيات وبطانة كاملة.", img: "https://i.postimg.cc/htQjNg3B/Whats-App-Image-2026-11-16-at-12-36-40-AM-(2).jpg" },
-      { id: 8, name: "Fleece-Lined Corduroy Trousers", nameAr: "بنطال كوردروي مبطن بالفليس", category: "tops", price: 1050, desc: "Straight-leg corduroy bonded with thermal fleece.", descAr: "بنطال كوردروي مستقيم مبطن بفليس حراري.", img: "https://i.postimg.cc/0NgQs3Ts/Whats-App-Image-2026-11-16-at-12-36-40-AM.jpg" },
-      { id: 9, name: "Heavyweight Knit Lounge Pants", nameAr: "بنطال منزلي محبوك وثقيل", category: "tops", price: 890, desc: "Ribbed wool-cotton wide trousers with drawstring.", descAr: "بنطال واسع من مزيج الصوف والقطن مع رباط.", img: "https://i.postimg.cc/1tB5Dz4C/Whats-App-Image-2026-11-16-at-12-36-41-AM.jpg" }
+      { id: 1, name: "Patterned Wool Shirt", nameAr: "قميص صوف  مزخرف", category: "jackets", price: 650, desc: "Patterned Balenciaga wool shirt available in several colors.", descAr: "قميص صوف بالينسياغا مزخرف ومتوفر بعدة ألوان.", colors: ["Black And Grey ", "Red And Grey"], img: "https://i.postimg.cc/Gt6KKd5f/Whats-App-Image-2026-11-16-at-12-36-11-AM.jpg" },
+      { id: 3, name: " Fleece-Lined Aviator Jacket", nameAr: "جاكيت طيار بالينسياغا مبطن بالفليس", category: "jackets", price: 650, desc: "Balenciaga faux-suede moto jacket lined with thick fleece.", descAr: "جاكيت طيار بالينسياغا من الشمواه الصناعي ومبطن بفليس سميك.", img: "https://i.postimg.cc/L6d0jVKy/Whats-App-Image-2026-11-16-at-12-36-33-AM.jpg" },
+      { id: 4, name: "Fisherman Cable-Knit Turtleneck", nameAr: "كنزة محبوكة بضفائر وياقة عالية", category: "tops", price: 750, desc: "Heavyweight combed cotton fisherman knit.", descAr: "كنزة ثقيلة من القطن الممشط المحبوك.", img: "https://i.postimg.cc/GpZv6qjg/Whats-App-Image-2026-11-16-at-12-36-39-AM-(1).jpg" },
+      { id: 5, name: "Ribbed Merino-Cashmere Layering Top", nameAr: "بلوزة مضلعة من مزيج الميرينو والكشمير", category: "tops", price: 675, desc: "Soft merino and cashmere layering top.", descAr: "بلوزة ناعمة بطبقات من صوف الميرينو والكشمير.", img: "https://i.postimg.cc/q7t8m92Q/Whats-App-Image-2026-11-16-at-12-36-38-AM.jpg" },
+      { id: 6, name: "Egyptian Cotton Half-Zip Pullover", nameAr: "كنزة من القطن المصري بسحاب نصفي", category: "tops", price: 750, desc: "Brushed Egyptian cotton pullover with zip neck.", descAr: "كنزة من القطن المصري الناعم بياقة بسحاب.", img: "https://i.postimg.cc/mZVtHmHH/Whats-App-Image-2026-11-16-at-12-36-40-AM-(1).jpg" },
+      { id: 7, name: "Balenciaga Logo Sweatshirt - Cream", nameAr: "سويت شيرت بالينسياغا بشعار - كريمي", category: "tops", price: 700, desc: "Cream sweatshirt featuring a Balenciaga chest logo.", descAr: "سويت شيرت كريمي بشعار بالينسياغا على الصدر.", img: "https://i.postimg.cc/htQjNg3B/Whats-App-Image-2026-11-16-at-12-36-40-AM-(2).jpg" },
+      { id: 8, name: "Balenciaga Logo Sweatshirt - Black", nameAr: "سويت شيرت بالينسياغا بشعار - أسود", category: "tops", price: 700, desc: "Black sweatshirt featuring a Balenciaga chest logo.", descAr: "سويت شيرت أسود بشعار بالينسياغا على الصدر.", img: "https://i.postimg.cc/0NgQs3Ts/Whats-App-Image-2026-11-16-at-12-36-40-AM.jpg" },
+      { id: 9, name: "Balenciaga Logo Sweatshirt - Sage", nameAr: "سويت شيرت بالينسياغا بشعار - أخضر مريمي", category: "tops", price: 700, desc: "Sage sweatshirt featuring a Balenciaga chest logo.", descAr: "سويت شيرت أخضر مريمي بشعار بالينسياغا على الصدر.", img: "https://i.postimg.cc/1tB5Dz4C/Whats-App-Image-2026-11-16-at-12-36-41-AM.jpg" }
     ];
 
     var currentCategory = "all";
@@ -739,13 +743,18 @@
     function handleAddClothing(e) {
       e.preventDefault();
       var name = document.getElementById("newName").value.trim();
+      var nameAr = document.getElementById("newNameAr").value.trim();
+      if (!name || !nameAr) {
+        alert(translate("bothNamesRequired"));
+        return;
+      }
       var category = document.getElementById("newCat").value;
       var price = Number(document.getElementById("newPrice").value);
       var desc = document.getElementById("newDesc").value.trim();
       var colors = document.getElementById("newColors").value.split(",").map(function(color) { return color.trim(); }).filter(function(color) { return color.length > 0; });
       var img = document.getElementById("newImg").value.trim() || "https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=600&q=80";
 
-      items.unshift({ id: Date.now(), name: name, category: category, price: price, desc: desc, colors: colors, img: img });
+      items.unshift({ id: Date.now(), name: name, nameAr: nameAr, category: category, price: price, desc: desc, colors: colors, img: img });
       e.target.reset();
       closeModal("addModal");
       renderStore();
