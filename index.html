@@ -7,7 +7,7 @@
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
     [hidden] { display: none !important; }
-    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #fafaf9; color: #1c1917; line-height: 1.5; overflow-x: hidden; }
+    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f7f1e8; color: #2b211b; line-height: 1.5; overflow-x: hidden; }
     button, select, input { font-family: inherit; }
     button { cursor: pointer; }
 
@@ -19,9 +19,11 @@
       overflow: hidden;
       pointer-events: none;
       background:
-        radial-gradient(circle at 15% 20%, rgba(251, 191, 36, 0.14), transparent 24rem),
-        radial-gradient(circle at 85% 30%, rgba(120, 53, 15, 0.12), transparent 28rem),
-        linear-gradient(135deg, #fdfcfb 0%, #f7f3ed 50%, #fafaf9 100%);
+        radial-gradient(ellipse at 12% 18%, rgba(245, 158, 11, 0.2), transparent 31rem),
+        radial-gradient(ellipse at 88% 40%, rgba(120, 53, 15, 0.16), transparent 34rem),
+        radial-gradient(ellipse at 48% 95%, rgba(217, 119, 6, 0.12), transparent 36rem),
+        repeating-linear-gradient(135deg, rgba(120, 53, 15, 0.018) 0, rgba(120, 53, 15, 0.018) 1px, transparent 1px, transparent 9px),
+        linear-gradient(135deg, #fffaf1 0%, #f4e9d8 48%, #fbf5eb 100%);
     }
     .ambient-background::before,
     .ambient-background::after {
@@ -37,13 +39,13 @@
     .ambient-background::before {
       left: -12rem;
       top: 18%;
-      background: radial-gradient(circle, rgba(217, 119, 6, 0.22), rgba(217, 119, 6, 0));
+      background: radial-gradient(circle, rgba(217, 119, 6, 0.28), rgba(217, 119, 6, 0));
       animation: float-orb-one 18s ease-in-out infinite alternate;
     }
     .ambient-background::after {
       right: -14rem;
       bottom: 4%;
-      background: radial-gradient(circle, rgba(69, 26, 3, 0.16), rgba(69, 26, 3, 0));
+      background: radial-gradient(circle, rgba(146, 64, 14, 0.2), rgba(146, 64, 14, 0));
       animation: float-orb-two 22s ease-in-out infinite alternate;
     }
     @keyframes float-orb-one {
@@ -58,12 +60,12 @@
     /* Top Bar & Header */
     .top-bar { background: #0c0a09; color: #e7e5e4; text-align: center; font-size: 12px; padding: 8px 16px; letter-spacing: 0.5px; }
     .top-bar span { color: #fbbf24; font-weight: bold; }
-    header { position: sticky; top: 0; z-index: 100; background: #ffffff; border-bottom: 1px solid #e7e5e4; padding: 14px 24px; }
+    header { position: sticky; top: 0; z-index: 100; background: rgba(255, 250, 241, 0.9); border-bottom: 1px solid rgba(146, 64, 14, 0.16); padding: 14px 24px; box-shadow: 0 8px 24px rgba(69, 26, 3, 0.06); backdrop-filter: blur(14px); }
     .nav-container { max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; }
     .brand { display: flex; flex: 0 0 auto; align-items: center; text-decoration: none; }
     .brand img { display: block; width: 120px; height: 76px; object-fit: contain; }
     .nav-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
-    .search-box { padding: 8px 14px; border: 1px solid #d6d3d1; border-radius: 20px; font-size: 14px; width: 200px; }
+    .search-box { padding: 8px 14px; border: 1px solid #dfcdb5; border-radius: 20px; font-size: 14px; width: 200px; background: rgba(255, 255, 255, 0.72); }
 
     /* Buttons */
     .btn { padding: 9px 16px; border-radius: 8px; border: none; font-size: 14px; font-weight: 600; transition: 0.2s; }
@@ -71,15 +73,18 @@
     .btn-dark:hover { background: #78350f; }
     .btn-amber { background: #92400e; color: #ffffff; }
     .btn-amber:hover { background: #78350f; }
-    .btn-outline { background: #ffffff; color: #1c1917; border: 1px solid #d6d3d1; }
-    .btn-outline:hover { background: #f5f5f4; }
+    .btn-outline { background: rgba(255, 250, 241, 0.82); color: #392619; border: 1px solid #dfcdb5; }
+    .btn-outline:hover { background: #f3e5d2; }
     .badge { background: #d97706; color: #fff; padding: 2px 7px; border-radius: 12px; font-size: 12px; margin-left: 4px; }
 
     /* Hero */
     .hero {
       position: relative;
       overflow: hidden;
-      background: linear-gradient(115deg, #1c1917 0%, #451a03 50%, #78350f 100%);
+      background:
+        radial-gradient(ellipse at 18% 0%, rgba(245, 158, 11, 0.3), transparent 38%),
+        radial-gradient(ellipse at 92% 100%, rgba(217, 119, 6, 0.2), transparent 42%),
+        linear-gradient(115deg, #21150f 0%, #451a03 50%, #78350f 100%);
       background-size: 220% 220%;
       color: #ffffff;
       padding: 64px 24px;
@@ -112,44 +117,49 @@
     .container { max-width: 1200px; margin: 0 auto; padding: 40px 24px; }
     .toolbar { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 16px; margin-bottom: 28px; }
     .filters { display: flex; flex-wrap: wrap; gap: 8px; }
-    .filter-btn { padding: 8px 18px; border-radius: 20px; border: 1px solid #d6d3d1; background: #ffffff; font-size: 14px; font-weight: 500; }
-    .filter-btn.active { background: #1c1917; color: #ffffff; border-color: #1c1917; }
-    .sort-select { padding: 8px 14px; border-radius: 20px; border: 1px solid #d6d3d1; background: #ffffff; font-size: 14px; }
+    .filter-btn { padding: 8px 18px; border-radius: 20px; border: 1px solid #dfcdb5; background: rgba(255, 250, 241, 0.78); font-size: 14px; font-weight: 500; color: #392619; }
+    .filter-btn.active { background: #5b2b13; color: #ffffff; border-color: #5b2b13; }
+    .sort-select { padding: 8px 14px; border-radius: 20px; border: 1px solid #dfcdb5; background: rgba(255, 250, 241, 0.84); font-size: 14px; color: #392619; }
 
     /* Product Grid */
     .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); gap: 24px; }
-    .card { background: #ffffff; border: 1px solid #e7e5e4; border-radius: 12px; overflow: hidden; display: flex; flex-direction: column; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
-    .card-img-wrap { position: relative; height: 320px; background: #e7e5e4; }
+    .card { background: rgba(255, 251, 245, 0.93); border: 1px solid rgba(146, 64, 14, 0.15); border-radius: 16px; overflow: hidden; display: flex; flex-direction: column; box-shadow: 0 12px 30px rgba(69, 26, 3, 0.11); }
+    .card-img-wrap { position: relative; height: 320px; background: #eadcc9; }
     .card-img-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; }
-    .cat-tag { position: absolute; top: 12px; left: 12px; background: rgba(255,255,255,0.92); padding: 4px 10px; border-radius: 6px; font-size: 11px; font-weight: bold; text-transform: uppercase; }
-    .wish-btn { position: absolute; top: 12px; right: 12px; width: 34px; height: 34px; border-radius: 50%; border: none; background: #ffffff; font-size: 16px; box-shadow: 0 2px 5px rgba(0,0,0,0.15); }
+    .cat-tag { position: absolute; top: 12px; left: 12px; background: rgba(255, 250, 241, 0.94); color: #5b2b13; padding: 4px 10px; border-radius: 6px; font-size: 11px; font-weight: bold; text-transform: uppercase; }
+    .wish-btn { position: absolute; top: 12px; right: 12px; width: 34px; height: 34px; border-radius: 50%; border: none; background: rgba(255, 250, 241, 0.95); color: #5b2b13; font-size: 16px; box-shadow: 0 2px 8px rgba(69, 26, 3, 0.2); }
     .card-body { padding: 18px; flex: 1; display: flex; flex-direction: column; justify-content: space-between; }
     .card-title { font-size: 18px; font-weight: bold; margin-bottom: 4px; }
     .card-desc { font-size: 13px; color: #57534e; margin-bottom: 10px; }
     .card-price { font-size: 17px; font-weight: bold; color: #78350f; margin-bottom: 14px; }
-    .card-actions { display: flex; gap: 8px; padding-top: 12px; border-top: 1px solid #f5f5f4; }
-    .color-select { flex: 1; min-width: 0; padding: 8px; border: 1px solid #d6d3d1; border-radius: 8px; background: #fafaf9; }
+    .card-actions { display: flex; gap: 8px; padding-top: 12px; border-top: 1px solid #eadcc9; }
+    .color-select { flex: 1; min-width: 0; padding: 8px; border: 1px solid #dfcdb5; border-radius: 8px; background: #fffaf1; }
 
     /* Drawers & Modals */
     .overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.55); z-index: 200; display: none; justify-content: flex-end; }
     .overlay.open { display: flex; }
     .overlay.center { justify-content: center; align-items: center; padding: 16px; }
-    .drawer { background: #ffffff; width: 100%; max-width: 420px; height: 100%; display: flex; flex-direction: column; }
-    .modal-box { background: #ffffff; width: 100%; max-width: 440px; border-radius: 14px; padding: 24px; }
-    .drawer-header { padding: 18px 20px; border-bottom: 1px solid #e7e5e4; display: flex; justify-content: space-between; align-items: center; }
+    .drawer { background: #fffaf1; width: 100%; max-width: 420px; height: 100%; display: flex; flex-direction: column; }
+    .modal-box { background: #fffaf1; width: 100%; max-width: 440px; border: 1px solid #ead8c1; border-radius: 16px; padding: 24px; box-shadow: 0 20px 60px rgba(28, 25, 23, 0.24); }
+    .drawer-header { padding: 18px 20px; border-bottom: 1px solid #eadcc9; display: flex; justify-content: space-between; align-items: center; }
     .drawer-body { flex: 1; overflow-y: auto; padding: 20px; }
-    .drawer-footer { max-height: 55vh; overflow-y: auto; flex-shrink: 0; padding: 18px 20px; border-top: 1px solid #e7e5e4; background: #fafaf9; }
+    .drawer-footer { max-height: 55vh; overflow-y: auto; flex-shrink: 0; padding: 18px 20px; border-top: 1px solid #eadcc9; background: #f7ecdc; }
 
     /* Form & Cart Items */
-    .cart-item { display: flex; justify-content: space-between; align-items: center; background: #fafaf9; border: 1px solid #e7e5e4; padding: 10px; border-radius: 8px; margin-bottom: 10px; }
+    .cart-item { display: flex; justify-content: space-between; align-items: center; background: #fffdf8; border: 1px solid #eadcc9; padding: 10px; border-radius: 8px; margin-bottom: 10px; }
     .qty-controls { display: flex; align-items: center; gap: 8px; }
     .qty-btn { width: 26px; height: 26px; border: 1px solid #d6d3d1; background: #ffffff; border-radius: 4px; font-weight: bold; }
-    .form-input { width: 100%; padding: 9px 12px; border: 1px solid #d6d3d1; border-radius: 8px; font-size: 14px; margin-bottom: 10px; }
+    .cart-summary { margin: 14px 0; }
+    .cart-item-details { flex: 1; min-width: 0; }
+    .cart-item-controls { display: flex; align-items: center; gap: 6px; margin-top: 8px; }
+    .cart-item-controls .qty-btn { width: 30px; height: 30px; }
+    .cart-remove { padding: 5px 8px; font-size: 12px; }
+    .form-input { width: 100%; padding: 9px 12px; border: 1px solid #dfcdb5; border-radius: 8px; font-size: 14px; margin-bottom: 10px; background: #fffdf8; }
     .summary-row { display: flex; justify-content: space-between; font-size: 14px; margin-bottom: 6px; }
     .summary-total { display: flex; justify-content: space-between; font-size: 17px; font-weight: bold; padding-top: 8px; border-top: 1px solid #d6d3d1; margin-bottom: 14px; }
     .payment-notice { background: #fffbeb; border: 1px solid #fde68a; border-radius: 8px; color: #78350f; font-size: 13px; margin-bottom: 10px; padding: 10px 12px; }
 
-    footer { background: #0c0a09; color: #a8a29e; text-align: center; padding: 32px 16px; font-size: 13px; margin-top: 40px; }
+    footer { background: linear-gradient(115deg, #21150f, #451a03 58%, #5b2b13); color: #f4e7d4; text-align: center; padding: 32px 16px; font-size: 13px; margin-top: 40px; }
     html[dir="rtl"] .overlay:not(.center) { justify-content: flex-start; }
     html[dir="rtl"] .cat-tag { left: auto; right: 12px; }
     html[dir="rtl"] .wish-btn { right: auto; left: 12px; }
@@ -177,6 +187,7 @@
         <input type="text" id="searchInput" class="search-box" placeholder="Search clothing..." data-i18n-placeholder="search" onkeyup="renderStore()" />
         <button type="button" class="btn btn-amber" onclick="openModal('addModal')" data-i18n="addClothing">+ Add Clothing</button>
         <button type="button" class="btn btn-outline" onclick="openModal('wishModal')">♡ <span data-i18n="wishlist">Wishlist</span> (<span id="wishCount">0</span>)</button>
+        <button type="button" class="btn btn-outline" onclick="openModal('bagModal')"><span data-i18n="bag">Bag</span> (<span id="bagCount">0</span>)</button>
         <a class="btn btn-dark" href="https://wa.me/201144410012" target="_blank" rel="noopener" style="text-decoration:none;" data-i18n="contactUs">Contact Us</a>
       </div>
     </div>
@@ -249,6 +260,52 @@
     </div>
   </div>
 
+  <!-- SHOPPING BAG DRAWER -->
+  <div id="bagModal" class="overlay">
+    <div class="drawer">
+      <div class="drawer-header">
+        <h3 data-i18n="bagCheckout">Shopping Bag</h3>
+        <button type="button" class="btn btn-outline" onclick="closeModal('bagModal')" aria-label="Close" data-i18n-aria-label="close">✕</button>
+      </div>
+      <div class="drawer-body" id="cartBody"></div>
+      <div class="drawer-footer">
+        <label for="promoInput" data-i18n="promoCode">Code: NJ54</label>
+        <div style="display:flex; gap:8px; margin-top:8px;">
+          <input type="text" id="promoInput" class="form-input" style="margin-bottom:0;" placeholder="Enter promo code" data-i18n-placeholder="promoPlaceholder" />
+          <button type="button" class="btn btn-outline" onclick="applyPromoCode()" data-i18n="apply">Apply</button>
+        </div>
+        <p id="promoMessage" role="status" style="font-size:13px; margin-top:6px;"></p>
+        <div class="cart-summary">
+          <div class="summary-row"><span data-i18n="subtotal">Subtotal:</span><span id="cartSubtotal">0 EGP</span></div>
+          <div class="summary-row"><span data-i18n="delivery">Delivery:</span><span data-i18n="deliveryPending">To be confirmed on WhatsApp</span></div>
+          <div class="summary-row"><span data-i18n="discount">Discount (10%):</span><span id="cartDiscount">0 EGP</span></div>
+          <div class="summary-total"><span data-i18n="totalBeforeDelivery">Total before delivery:</span><span id="cartTotal">0 EGP</span></div>
+        </div>
+        <p style="font-size:12px; margin-bottom:12px;" data-i18n="deliveryNotice">Confirm availability and delivery fee with us on WhatsApp.</p>
+        <button type="button" class="btn btn-dark" style="width:100%;" onclick="openCheckout()" data-i18n="checkout">Checkout</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- WHATSAPP CONTACT FORM -->
+  <div id="checkoutModal" class="overlay center">
+    <div class="modal-box">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+        <h3 data-i18n="checkout">Checkout</h3>
+        <button type="button" class="btn btn-outline" onclick="closeModal('checkoutModal')" aria-label="Close" data-i18n-aria-label="close">✕</button>
+      </div>
+      <p class="payment-notice" data-i18n="whatsappInstructions">This opens WhatsApp so you can contact us. Your order is not confirmed or paid for on this website.</p>
+      <p style="font-size:13px; margin-bottom:12px;" data-i18n="deliveryNotice">Confirm availability and delivery fee with us on WhatsApp.</p>
+      <form onsubmit="contactCheckout(event)">
+        <input type="text" id="checkoutName" class="form-input" required placeholder="Full Name" data-i18n-placeholder="fullName" />
+        <input type="tel" id="checkoutPhone" class="form-input" required placeholder="Phone (e.g. 010xxxxxxxx)" data-i18n-placeholder="phone" />
+        <input type="text" id="checkoutCity" class="form-input" required placeholder="City / Governorate" data-i18n-placeholder="cityPlaceholder" />
+        <input type="text" id="checkoutAddress" class="form-input" required placeholder="Street &amp; Building Number" data-i18n-placeholder="address" />
+        <button type="submit" class="btn btn-dark" style="width:100%;" data-i18n="contactUs">Contact Us</button>
+      </form>
+    </div>
+  </div>
+
   <script>
     var currentLanguage = "en";
     var translations = {
@@ -292,7 +349,17 @@
         savedWishlist: "Saved Wishlist",
         close: "Close",
         bagCheckout: "Shopping Bag & Checkout",
-        promoCode: "Code: RASHA10",
+        promoCode: "Code: NJ54",
+        promoPlaceholder: "Enter promo code",
+        promoApplied: "10% discount applied.",
+        checkout: "Checkout",
+        deliveryPending: "To be confirmed on WhatsApp",
+        deliveryNotice: "Confirm availability and delivery fee with us on WhatsApp.",
+        totalBeforeDelivery: "Total before delivery:",
+        cityPlaceholder: "City / Governorate",
+        remove: "Remove",
+        decreaseQty: "Decrease quantity",
+        increaseQty: "Increase quantity",
         apply: "Apply",
         subtotal: "Subtotal:",
         delivery: "Delivery:",
@@ -318,7 +385,7 @@
         backToStore: "Back to Store",
         noSearchResults: "No clothing items matched your search.",
         noWishlist: "No saved items yet.",
-        addToBag: "Contact on WhatsApp",
+        addToBag: "Add to Bag",
         contactInquiry: "Hello RASHA, I'm interested in {item}. Price: {price}.{color}",
         color: "Color",
         chooseColor: "Choose color",
@@ -332,12 +399,14 @@
         colorRed: "Red",
         colorGreen: "Green",
         emptyBag: "Your Rasha bag is empty.",
-        invalidPromo: "Invalid promo code. Enter RASHA10 for 10% off.",
-        sendVodafone: "Send {amount} to Vodafone Cash: 01144410012. Check the recipient name before transferring. Your order stays pending until the transfer is verified.",
+        invalidPromo: "Invalid promo code. Enter NJ54 for 10% off.",
+        sendVodafone: "Send {amount} to Vodafone Cash: 01001725661 recipient name before transferring. Your order stays pending until the transfer is verified.",
         sendInstaPay: "Send {amount} via InstaPay to 01144410012. Check the recipient name before transferring. Your order stays pending until the transfer is verified.",
-        whatsappInstructions: "After you continue, WhatsApp will open with your order details. Tap Send to submit your order.",
+        whatsappInstructions: "This opens WhatsApp so you can contact us. Your order is not confirmed or paid for on this website.",
         cardUnavailableAlert: "Card checkout is not available until a payment gateway account is configured.",
         waNewOrder: "New RASHA order request",
+        waOrderRequest: "Hello RASHA, I'd like to ask about ordering:",
+        waDeliveryPending: "Please confirm the delivery fee and availability on WhatsApp.",
         waOrderReference: "Order reference",
         waName: "Name",
         waPhone: "Phone",
@@ -409,7 +478,17 @@
         savedWishlist: "قائمة الأمنيات المحفوظة",
         close: "إغلاق",
         bagCheckout: "حقيبة التسوق وإتمام الطلب",
-        promoCode: "الرمز: RASHA10",
+        promoCode: "الرمز: NJ54",
+        promoPlaceholder: "أدخل رمز الخصم",
+        promoApplied: "تم تطبيق خصم ١٠٪.",
+        checkout: "إتمام الطلب",
+        deliveryPending: "يتم التأكيد عبر واتساب",
+        deliveryNotice: "يرجى تأكيد التوفر ورسوم التوصيل عبر واتساب.",
+        totalBeforeDelivery: "الإجمالي قبل التوصيل:",
+        cityPlaceholder: "المدينة / المحافظة",
+        remove: "إزالة",
+        decreaseQty: "تقليل الكمية",
+        increaseQty: "زيادة الكمية",
         apply: "تطبيق",
         subtotal: "المجموع الفرعي:",
         delivery: "التوصيل:",
@@ -435,7 +514,7 @@
         backToStore: "العودة إلى المتجر",
         noSearchResults: "لا توجد منتجات تطابق بحثك.",
         noWishlist: "لا توجد منتجات محفوظة بعد.",
-        addToBag: "تواصل عبر واتساب",
+        addToBag: "أضف إلى الحقيبة",
         contactInquiry: "مرحبًا راشا، أنا مهتم بـ {item}. السعر: {price}.{color}",
         color: "اللون",
         chooseColor: "اختر اللون",
@@ -449,12 +528,14 @@
         colorRed: "أحمر",
         colorGreen: "أخضر",
         emptyBag: "حقيبة راشا فارغة.",
-        invalidPromo: "رمز الخصم غير صحيح. أدخل RASHA10 للحصول على خصم ١٠٪.",
+        invalidPromo: "رمز الخصم غير صحيح. أدخل NJ54 للحصول على خصم ١٠٪.",
         sendVodafone: "أرسل {amount} إلى فودافون كاش: 01144410012. تأكد من اسم المستلم قبل التحويل. سيظل الطلب قيد الانتظار حتى يتم التحقق من التحويل.",
         sendInstaPay: "أرسل {amount} عبر إنستا باي إلى 01144410012. تأكد من اسم المستلم قبل التحويل. سيظل الطلب قيد الانتظار حتى يتم التحقق من التحويل.",
-        whatsappInstructions: "بعد المتابعة، افتح واتساب وأرسل تفاصيل طلبك.",
+        whatsappInstructions: "سيتم فتح واتساب للتواصل معنا. لن يتم تأكيد الطلب أو الدفع عبر هذا الموقع.",
         cardUnavailableAlert: "الدفع بالبطاقات غير متاح حتى يتم إعداد حساب لدى بوابة دفع.",
         waNewOrder: "طلب جديد من راشا",
+        waOrderRequest: "مرحبًا راشا، أود الاستفسار عن الطلب:",
+        waDeliveryPending: "يرجى تأكيد التوفر ورسوم التوصيل عبر واتساب.",
         waOrderReference: "رقم الطلب",
         waName: "الاسم",
         waPhone: "الهاتف",
@@ -515,6 +596,7 @@
       }
       document.getElementById("languageToggle").textContent = currentLanguage === "ar" ? "English" : "العربية";
       renderStore();
+      renderCart();
       if (document.getElementById("wishModal").classList.contains("open")) renderWishlist();
     }
 
@@ -567,22 +649,28 @@
     }
 
     var items = [
-      { id: 1, name: "Patterned Wool Shirt", nameAr: "قميص صوف بنقوش", category: "jackets", price: 600, desc: "Patterned wool shirt available in several colors.", descAr: "قميص صوف بنقوش متوفر بعدة ألوان.", colors: ["Black And Grey ","Red And Grey" ], colorsAr: ["اسود ورماديو", "احمر ورمادي" ], img: "https://i.postimg.cc/Gt6KKd5f/Whats-App-Image-2026-11-16-at-12-36-11-AM.jpg" },
+      { id: 1, name: "Patterned Wool Shirt", nameAr: "قميص صوف بنقوش", category: "jackets", price: 600, desc: "Patterned wool shirt available in several colors.", descAr: "قميص صوف بنقوش متوفر بعدة ألوان.", colors: ["Black And Grey ","Red And Grey"
+    
+
+      ], img:"https://i.postimg.cc/Gt6KKd5f/Whats-App-Image-2026-11-16-at-12-36-11-AM.jpg" },
       { id: 3, name: "Shearling Aviator Jacket", nameAr: "جاكيت طيار ببطانة دافئة", category: "jackets", price: 650, desc: "Faux-suede moto jacket lined with thick fleece.", descAr: "جاكيت شمواه صناعي مبطن بفليس سميك.", img: "https://i.postimg.cc/L6d0jVKy/Whats-App-Image-2026-11-16-at-12-36-33-AM.jpg" },
       { id: 4, name: "Chunky Cable-Knit Turtleneck", nameAr: "كنزة سميكة محبوكة برقبة عالية", category: "tops", price: 980, desc: "Heavyweight combed cotton fisherman knit.", descAr: "كنزة ثقيلة من القطن الممشط المحبوك.", img: "https://i.postimg.cc/GpZv6qjg/Whats-App-Image-2026-11-16-at-12-36-39-AM-(1).jpg" },
       { id: 5, name: "Cashmere-Blend Ribbed Top", nameAr: "بلوزة مضلعة بمزيج الكشمير", category: "tops", price: 850, desc: "Soft merino and cashmere layering top.", descAr: "بلوزة ناعمة بطبقات من صوف الميرينو والكشمير.", img: "https://i.postimg.cc/q7t8m92Q/Whats-App-Image-2026-11-16-at-12-36-38-AM.jpg" },
       { id: 6, name: "Oversized Half-Zip Fleece", nameAr: "كنزة واسعة بسحاب نصفي", category: "tops", price: 920, desc: "Brushed Egyptian cotton pullover with zip neck.", descAr: "كنزة من القطن المصري الناعم بياقة بسحاب.", img: "https://i.postimg.cc/mZVtHmHH/Whats-App-Image-2026-11-16-at-12-36-40-AM-(1).jpg" },
-      { id: 7, name: "Tailored Wool Wide-Leg Pants", nameAr: "بنطال صوف واسع بقصة أنيقة", category: "pants", price: 1150, desc: "High-waisted pleated trousers with full lining.", descAr: "بنطال بخصر عالٍ وثنيات وبطانة كاملة.", img: "https://i.postimg.cc/htQjNg3B/Whats-App-Image-2026-11-16-at-12-36-40-AM-(2).jpg" },
-      { id: 8, name: "Fleece-Lined Corduroy Trousers", nameAr: "بنطال كوردروي مبطن بالفليس", category: "pants", price: 1050, desc: "Straight-leg corduroy bonded with thermal fleece.", descAr: "بنطال كوردروي مستقيم مبطن بفليس حراري.", img: "https://i.postimg.cc/0NgQs3Ts/Whats-App-Image-2026-11-16-at-12-36-40-AM.jpg" },
-      { id: 9, name: "Heavyweight Knit Lounge Pants", nameAr: "بنطال منزلي محبوك وثقيل", category: "pants", price: 890, desc: "Ribbed wool-cotton wide trousers with drawstring.", descAr: "بنطال واسع من مزيج الصوف والقطن مع رباط.", img: "https://i.postimg.cc/1tB5Dz4C/Whats-App-Image-2026-11-16-at-12-36-41-AM.jpg" }
+      { id: 7, name: "Tailored Wool Wide-Leg Pants", nameAr: "بنطال صوف واسع بقصة أنيقة", category: "tops", price: 1150, desc: "High-waisted pleated trousers with full lining.", descAr: "بنطال بخصر عالٍ وثنيات وبطانة كاملة.", img: "https://i.postimg.cc/htQjNg3B/Whats-App-Image-2026-11-16-at-12-36-40-AM-(2).jpg" },
+      { id: 8, name: "Fleece-Lined Corduroy Trousers", nameAr: "بنطال كوردروي مبطن بالفليس", category: "tops", price: 1050, desc: "Straight-leg corduroy bonded with thermal fleece.", descAr: "بنطال كوردروي مستقيم مبطن بفليس حراري.", img: "https://i.postimg.cc/0NgQs3Ts/Whats-App-Image-2026-11-16-at-12-36-40-AM.jpg" },
+      { id: 9, name: "Heavyweight Knit Lounge Pants", nameAr: "بنطال منزلي محبوك وثقيل", category: "tops", price: 890, desc: "Ribbed wool-cotton wide trousers with drawstring.", descAr: "بنطال واسع من مزيج الصوف والقطن مع رباط.", img: "https://i.postimg.cc/1tB5Dz4C/Whats-App-Image-2026-11-16-at-12-36-41-AM.jpg" }
     ];
 
     var currentCategory = "all";
     var wishlist = [];
+    var cart = [];
+    var promoApplied = false;
 
     function openModal(id) {
       document.getElementById(id).classList.add("open");
       if (id === "wishModal") renderWishlist();
+      if (id === "bagModal") renderCart();
     }
 
     function closeModal(id) {
@@ -639,7 +727,7 @@
                 '<div class="card-price">' + formatPrice(p.price) + '</div>' +
                 '<div class="card-actions">' +
                   renderColorSelect(p, "color-" + p.id) +
-                  '<button type="button" class="btn btn-dark" style="flex:1;" onclick="contactProduct(' + p.id + ')">' + translate("addToBag") + '</button>' +
+                  '<button type="button" class="btn btn-dark" style="flex:1;" onclick="addToCart(' + p.id + ')">' + translate("addToBag") + '</button>' +
                 '</div>' +
               '</div>' +
             '</div>' +
@@ -686,13 +774,13 @@
           '<div class="cart-item">' +
             '<div><strong>' + getProductName(item) + '</strong><div style="font-size:12px; color:#78350f;">' + formatPrice(item.price) + '</div></div>' +
             renderColorSelect(item, "wish-color-" + item.id) +
-            '<button type="button" class="btn btn-dark" onclick="contactWishProduct(' + item.id + ')">' + translate("addToBag") + '</button>' +
+            '<button type="button" class="btn btn-dark" onclick="addToCartFromWishlist(' + item.id + ')">' + translate("addToBag") + '</button>' +
           '</div>';
       }
       box.innerHTML = html;
     }
 
-    function contactProduct(id, selectedColor) {
+    function addToCart(id, selectedColor) {
       var item = items.find(function(x) { return x.id === id; });
       if (!item) return;
 
@@ -706,64 +794,153 @@
         }
       }
 
-      var colorText = color ? " " + translate("color") + ": " + getColorLabel(color) : "";
-      var message = translate("contactInquiry")
-        .replace("{item}", getProductName(item))
-        .replace("{price}", formatPrice(item.price))
-        .replace("{color}", colorText);
-      window.open("https://wa.me/201144410012?text=" + encodeURIComponent(message), "_blank", "noopener");
+      var existing = -1;
+      for (var i = 0; i < cart.length; i++) {
+        if (cart[i].id === id && cart[i].color === color) {
+          existing = i;
+          break;
+        }
+      }
+      if (existing === -1) cart.push({ id: id, color: color, quantity: 1 });
+      else cart[existing].quantity++;
+      renderCart();
+      openModal("bagModal");
     }
 
-    function contactWishProduct(id) {
+    function addToCartFromWishlist(id) {
       var colorSelect = document.getElementById("wish-color-" + id);
       var item = items.find(function(x) { return x.id === id; });
       if (item && item.colors && item.colors.length > 0 && (!colorSelect || !colorSelect.value)) {
         alert(translate("selectColorAlert"));
         return;
       }
-      contactProduct(id, colorSelect ? colorSelect.value : "");
+      addToCart(id, colorSelect ? colorSelect.value : "");
+    }
+
+    function getCartTotals() {
+      var subtotal = 0;
+      for (var i = 0; i < cart.length; i++) {
+        var item = items.find(function(x) { return x.id === cart[i].id; });
+        if (item) subtotal += item.price * cart[i].quantity;
+      }
+      var discount = promoApplied ? Math.round(subtotal * 0.1) : 0;
+      return { subtotal: subtotal, discount: discount, total: subtotal - discount };
+    }
+
+    function renderCart() {
+      var box = document.getElementById("cartBody");
+      var count = 0;
+      for (var i = 0; i < cart.length; i++) count += cart[i].quantity;
+      document.getElementById("bagCount").textContent = count;
+
+      if (cart.length === 0) {
+        promoApplied = false;
+        box.innerHTML = "<p style='text-align:center; color:#78716c; padding:40px 0;'>" + translate("emptyBag") + "</p>";
+      } else {
+        var html = "";
+        for (var j = 0; j < cart.length; j++) {
+          var entry = cart[j];
+          var item = items.find(function(x) { return x.id === entry.id; });
+          if (!item) continue;
+          html +=
+            '<div class="cart-item">' +
+              '<div class="cart-item-details"><strong>' + escapeHTML(getProductName(item)) + '</strong>' +
+                '<div style="font-size:12px; color:#78350f;">' + formatPrice(item.price) + (entry.color ? ' · ' + escapeHTML(getColorLabel(entry.color)) : '') + '</div>' +
+                '<div class="cart-item-controls">' +
+                  '<button type="button" class="qty-btn" aria-label="' + escapeHTML(translate("decreaseQty")) + '" onclick="updateCartQuantity(' + j + ', -1)">−</button>' +
+                  '<span>' + entry.quantity + '</span>' +
+                  '<button type="button" class="qty-btn" aria-label="' + escapeHTML(translate("increaseQty")) + '" onclick="updateCartQuantity(' + j + ', 1)">+</button>' +
+                  '<button type="button" class="btn btn-outline cart-remove" onclick="removeCartItem(' + j + ')">' + translate("remove") + '</button>' +
+                '</div>' +
+              '</div>' +
+              '<strong>' + formatPrice(item.price * entry.quantity) + '</strong>' +
+            '</div>';
+        }
+        box.innerHTML = html;
+      }
+
+      var totals = getCartTotals();
+      document.getElementById("cartSubtotal").textContent = formatPrice(totals.subtotal);
+      document.getElementById("cartDiscount").textContent = "−" + formatPrice(totals.discount);
+      document.getElementById("cartTotal").textContent = formatPrice(totals.total);
+      document.getElementById("promoMessage").textContent = promoApplied ? translate("promoApplied") : "";
+    }
+
+    function updateCartQuantity(index, change) {
+      if (!cart[index]) return;
+      cart[index].quantity += change;
+      if (cart[index].quantity <= 0) cart.splice(index, 1);
+      renderCart();
+    }
+
+    function removeCartItem(index) {
+      if (!cart[index]) return;
+      cart.splice(index, 1);
+      renderCart();
+    }
+
+    function applyPromoCode() {
+      var code = document.getElementById("promoInput").value.trim().toUpperCase();
+      if (code !== "NJ54") {
+        promoApplied = false;
+        renderCart();
+        alert(translate("invalidPromo"));
+        return;
+      }
+      promoApplied = true;
+      renderCart();
+    }
+
+    function openCheckout() {
+      if (cart.length === 0) {
+        alert(translate("emptyBag"));
+        return;
+      }
+      closeModal("bagModal");
+      openModal("checkoutModal");
+    }
+
+    function contactCheckout(event) {
+      event.preventDefault();
+      if (cart.length === 0) {
+        alert(translate("emptyBag"));
+        closeModal("checkoutModal");
+        return;
+      }
+
+      var totals = getCartTotals();
+      var lines = [
+        translate("waOrderRequest"),
+        "",
+        translate("waName") + ": " + document.getElementById("checkoutName").value.trim(),
+        translate("waPhone") + ": " + document.getElementById("checkoutPhone").value.trim(),
+        translate("waCity") + ": " + document.getElementById("checkoutCity").value.trim(),
+        translate("waAddress") + ": " + document.getElementById("checkoutAddress").value.trim(),
+        "",
+        translate("waItems")
+      ];
+      for (var i = 0; i < cart.length; i++) {
+        var entry = cart[i];
+        var item = items.find(function(x) { return x.id === entry.id; });
+        if (!item) continue;
+        var itemLine = getProductName(item) + " × " + entry.quantity + " — " + formatPrice(item.price * entry.quantity);
+        if (entry.color) itemLine += " (" + translate("color") + ": " + getColorLabel(entry.color) + ")";
+        lines.push(itemLine);
+      }
+      lines.push(
+        "",
+        translate("waSubtotal") + ": " + formatPrice(totals.subtotal),
+        translate("waDiscount") + ": " + formatPrice(totals.discount),
+        translate("totalBeforeDelivery").replace(/:$/, "") + ": " + formatPrice(totals.total),
+        translate("waDelivery") + ": " + translate("deliveryPending"),
+        translate("waDeliveryPending")
+      );
+
+      window.open("https://wa.me/201144410012?text=" + encodeURIComponent(lines.join("\n")), "_blank", "noopener");
     }
 
     applyLanguage();
   </script>
-<!-- Code injected by live-server -->
-<script>
-	// <![CDATA[  <-- For SVG support
-	if ('WebSocket' in window) {
-		(function () {
-			function refreshCSS() {
-				var sheets = [].slice.call(document.getElementsByTagName("link"));
-				var head = document.getElementsByTagName("head")[0];
-				for (var i = 0; i < sheets.length; ++i) {
-					var elem = sheets[i];
-					var parent = elem.parentElement || head;
-					parent.removeChild(elem);
-					var rel = elem.rel;
-					if (elem.href && typeof rel != "string" || rel.length == 0 || rel.toLowerCase() == "stylesheet") {
-						var url = elem.href.replace(/(&|\?)_cacheOverride=\d+/, '');
-						elem.href = url + (url.indexOf('?') >= 0 ? '&' : '?') + '_cacheOverride=' + (new Date().valueOf());
-					}
-					parent.appendChild(elem);
-				}
-			}
-			var protocol = window.location.protocol === 'http:' ? 'ws://' : 'wss://';
-			var address = protocol + window.location.host + window.location.pathname + '/ws';
-			var socket = new WebSocket(address);
-			socket.onmessage = function (msg) {
-				if (msg.data == 'reload') window.location.reload();
-				else if (msg.data == 'refreshcss') refreshCSS();
-			};
-			if (sessionStorage && !sessionStorage.getItem('IsThisFirstTime_Log_From_LiveServer')) {
-				console.log('Live reload enabled.');
-				sessionStorage.setItem('IsThisFirstTime_Log_From_LiveServer', true);
-			}
-		})();
-	}
-	else {
-		console.error('Upgrade your browser. This Browser is NOT supported WebSocket for Live-Reloading.');
-	}
-	// ]]>
-</script>
 <!-- Code injected by live-server -->
 <script>
 	// <![CDATA[  <-- For SVG support
